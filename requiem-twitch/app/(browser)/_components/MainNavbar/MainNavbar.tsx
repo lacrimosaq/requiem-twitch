@@ -6,18 +6,18 @@ import { AvatarMenu } from "./AvatarMenu";
 import { useState, useEffect } from 'react';
 
 export const MainNavbar = ({setChildState}) => {
-    const [jwtToken, setJwtToken] = useState<string| null>("");
+    const [jwtToken, setJwtToken] = useState<string| null>(null);
 
     useEffect(() => {
         setJwtToken(localStorage.getItem("jwtToken"));
-    }, []);
+    }, [jwtToken]);
     return (
-        <nav className="fixed top-0 w-full h-20 bg-gray-800 px-2 lg:px-4 flex justify-between items-center">
+        <nav className="top-0 w-full h-20 bg-gray-800 px-2 lg:px-4 flex justify-between items-center">
             <Logo/>
             <Search/>
             {jwtToken === null
                 ? <FormButtons setChildState={setChildState}/>
-                : <AvatarMenu/>
+                : <AvatarMenu setJwtToken={setJwtToken}/>
             }
         </nav>
     );

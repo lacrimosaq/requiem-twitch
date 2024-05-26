@@ -1,7 +1,7 @@
 "use client"
 import { useState, useRef, useEffect } from 'react';
-import RegisterForm from "@/app/(browser)/_components/RegisterForm/RegisterForm";
-import LoginForm from "@/app/(browser)/_components/LoginForm/LoginForm";
+import RegisterForm from "@/app/(browser)/_components/AuthForm/RegisterForm/RegisterForm";
+import LoginForm from "@/app/(browser)/_components/AuthForm/LoginForm/LoginForm";
 import AuthForm from "@/app/(browser)/_components/AuthForm/AuthForm";
 
 export default function Home() {

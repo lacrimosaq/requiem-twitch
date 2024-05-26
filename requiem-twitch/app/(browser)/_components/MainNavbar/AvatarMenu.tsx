@@ -1,6 +1,10 @@
 import { Dropdown, Avatar } from "flowbite-react";
+import { useEffect } from "react";
 
-export const AvatarMenu = () => {
+export const AvatarMenu = ({setJwtToken}) => {
+  // useEffect(() => {
+  //     setJwtToken(localStorage.getItem("jwtToken"));
+  // }, [localStorage.getItem("jwtToken")]);
     return(
         <Dropdown
         label={<Avatar alt="User settings" img="/default_avatar.jpg" rounded />}
@@ -15,7 +19,10 @@ export const AvatarMenu = () => {
         <Dropdown.Item>Settings</Dropdown.Item>
         <Dropdown.Item>Earnings</Dropdown.Item>
         <Dropdown.Divider />
-        <Dropdown.Item>Sign out</Dropdown.Item>
+        <Dropdown.Item onClick={() => {
+          localStorage.clear();
+          setJwtToken(localStorage.getItem("jwtToken")); //maybe just refresh)
+        }}>Log out</Dropdown.Item>
       </Dropdown>
 
     );

@@ -1,7 +1,9 @@
 "use client"
 import AuthForm from "./_components/AuthForm/AuthForm";
 import { MainNavbar } from "./_components/MainNavbar/MainNavbar";
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
+import { Sidebar, SidebarSkeleton } from "./_components/Sidebar/sidebar";
+import { Container } from "./_components/container";
 
 const BrowseLayout = ({
     children,
@@ -19,11 +21,18 @@ const BrowseLayout = ({
         if(formType !== "") setShowForm(true);
         else setShowForm(false);
     }, [formType]);
+
     return(
         <>
         <MainNavbar setChildState={setFormType}/>
         <div>
-            {children}
+            {/* <Suspense fallback={<SidebarSkeleton/>}> */}
+            {/* <Suspense fallback={<div>haha</div>}> */}
+                <Sidebar/>
+            {/* </Suspense> */}
+            <Container>
+                {children}
+            </Container>
         </div>
         {showForm && (
             <div className="relative h-screen w-screen overflow-hidden ">
