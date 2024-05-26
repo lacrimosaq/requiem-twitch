@@ -24,7 +24,7 @@ const onClear = () => {
 }
 
     return(
-        <form onSubmit={onSubmit} className="flex items-center w-1/4">
+        <form onSubmit={onSubmit} className="flex w-1/4">
             <input type="search" 
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
