@@ -6,22 +6,22 @@ import { Wrapper } from "./wrapper";
 export const Sidebar = () => {
     const [recommended, setRecommended] = useState<any| null>([]);
 
-    const CreatePromise = async () => {
-        // console.log("chmo");
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        let jsonString = '{"username": "sketcher_8", "avatar": "/default_avatar.jpg"}';
-        let user = Object.assign({}, JSON.parse(jsonString));
-        setRecommended([user]);
-    }
+    // const CreatePromise = async () => {
+    //     // console.log("chmo");
+    //     await new Promise(resolve => setTimeout(resolve, 1000));
+    //     let jsonString = '{"username": "sketcher_8", "avatar": "/default_avatar.jpg"}';
+    //     let user = Object.assign({}, JSON.parse(jsonString));
+    //     setRecommended([user]);
+    // }
 
     useEffect(() => {
-        CreatePromise();
+        LoadRecommended();
     }, []);
     
     const LoadRecommended = () => {
         // let headers = new Headers();
         // headers.append('Content-Type', 'application/json');
-        fetch("http://localhost:8080/auth/login", {
+        fetch("http://localhost:8080/user/recommended/" + (localStorage.getItem("id") === null ? 0 : localStorage.getItem("id")), {
             method: "GET",
             // headers: headers,
         }).then(resp => {

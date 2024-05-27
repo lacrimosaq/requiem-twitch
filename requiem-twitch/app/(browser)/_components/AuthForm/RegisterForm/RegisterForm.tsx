@@ -18,8 +18,11 @@ const RegisterForm = ({stateChanger, ...rest}) => {
             "password" : password, 
         };
         console.log(registerobj);
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
         fetch("http://localhost:8080/auth/register", {
             method: "POST",
+            headers: headers,
             body: JSON.stringify(registerobj)
         }).then(resp => {
           if (resp.status !== 200) {
@@ -27,7 +30,8 @@ const RegisterForm = ({stateChanger, ...rest}) => {
             }
             return resp.json()
         }).then(json => {
-          localStorage.setItem('username', json.user.username);
+            localStorage.setItem('id', json.user.id);
+            localStorage.setItem('username', json.user.username);
             localStorage.setItem('jwtToken', json.token);
             window.location.reload(); 
         }).catch((err) => {

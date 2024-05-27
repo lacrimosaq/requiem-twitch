@@ -1,40 +1,53 @@
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation'
 const LoginForm = ({stateChanger, ...rest}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-      const router = useRouter();
+    // const [isPending, startTransition] = useTransition();
+    const [error, setError] = useState<string| null>(null);
+    const [isLoading, startLoading] = useState(false);
+    const router = useRouter();
 
+    // const onSubmit = (e) => {
+    //   startTransition(() =>{
+    //     LoginApi(e);
+    //   });
+    // }
     //     router.push('/dashboard')
-      const LoginApi = (e) => {
-            e.preventDefault();
-            let status = 0;
-            let loginobj = {
-                "username" : username,
-                "password" : password, 
-            };
-            console.log(loginobj);
-            let headers = new Headers();
-            headers.append('Content-Type', 'application/json');
-            fetch("http://localhost:8080/auth/login", {
-                method: "POST",
-                headers: headers,
-                body: JSON.stringify(loginobj)
-            }).then(resp => {
-                status = resp.status;
-                if (resp.status !== 200) {
-                    throw new Error('User not found');
-                }
-                return resp.json()
-            }).then(json => {
-                localStorage.setItem('username', json.user.username);
-                localStorage.setItem('jwtToken', json.token);
-                console.log("Token from login" + localStorage.getItem("jwtToken"));
-                if(status == 200) window.location.reload(); 
-            }).catch((err) => {
-                console.log('Failed :' + err.message);
-            });
+    const LoginApi =  (e) => {
+          e.preventDefault();
+          startLoading(true);
+          let status = 0;
+          let loginobj = {
+              "username" : username,
+              "password" : password, 
+          };
+          console.log(loginobj);
+          let headers = new Headers();
+          headers.append('Content-Type', 'application/json');
+          fetch("http://localhost:8080/auth/login", {
+              method: "POST",
+              headers: headers,
+              body: JSON.stringify(loginobj)
+          }).then(resp => {
+              status = resp.status;
+              if (resp.status !== 200) {
+                  throw new Error('User not found');
+              }
+              return resp.json()
+          }).then(json => {
+              localStorage.setItem('id', json.user.id);
+              localStorage.setItem('username', json.user.username);
+              localStorage.setItem('jwtToken', json.token);
+              console.log("Token from login" + localStorage.getItem("jwtToken"));
+              if(status == 200) window.location.reload(); 
+          }).catch((err) => {
+              console.log('Failed :' + err.message);
+              setError('Failed :' + err.message);
+          }).finally(() =>{
+            startLoading(false);
+          });
         
     }
     
@@ -63,12 +76,14 @@ const LoginForm = ({stateChanger, ...rest}) => {
               onChange={(e) => setPassword(e.target.value)}
               />
           </div>
-          <button
+          <button disabled={isLoading}
             type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className={"w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white"
+            + (!isLoading ? " bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" : " bg-red-800")}
           >
-            Login
+            {isLoading ? "Loading" : "Login"}
           </button>
+          {setError !== null && <div>{error}</div>}
         </form>
       </div>
   );

@@ -1,11 +1,18 @@
 "use client"
-export const  FormButtons = ({setChildState}) => {
+
+import { useForm } from "@/store/use-form";
+
+export const FormButtons = () => {
+  const {onLoginForm,
+        onRegisterForm,
+      } = useForm((state) => state);
+
   const handleLogInButtonClick = () => {
-    setChildState("login");
+    onLoginForm();
     // setShowLoginForm(true);
   };
   const handleSignUpButtonClick = () => {
-    setChildState("register");
+    onRegisterForm();
     // setShowLoginForm(true);
   };
     return(

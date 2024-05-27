@@ -12,7 +12,7 @@ export const AvatarMenu = ({setJwtToken}) => {
         inline
       >
         <Dropdown.Header>
-          <span className="block text-sm">Bonnie Green</span>
+          <span className="block text-sm">{localStorage.getItem("username")}</span>
           <span className="block truncate text-sm font-medium">name@flowbite.com</span>
         </Dropdown.Header>
         <Dropdown.Item>Dashboard</Dropdown.Item>

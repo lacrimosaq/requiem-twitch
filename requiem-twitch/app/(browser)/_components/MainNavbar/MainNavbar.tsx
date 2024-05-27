@@ -5,7 +5,7 @@ import { Search } from "./Search";
 import { AvatarMenu } from "./AvatarMenu";
 import { useState, useEffect } from 'react';
 
-export const MainNavbar = ({setChildState}) => {
+export const MainNavbar = () => {
     const [jwtToken, setJwtToken] = useState<string| null>(null);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export const MainNavbar = ({setChildState}) => {
             <Logo/>
             <Search/>
             {jwtToken === null
-                ? <FormButtons setChildState={setChildState}/>
+                ? <FormButtons/>
                 : <AvatarMenu setJwtToken={setJwtToken}/>
             }
         </nav>

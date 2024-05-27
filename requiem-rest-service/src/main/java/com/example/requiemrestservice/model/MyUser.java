@@ -3,6 +3,7 @@ package com.example.requiemrestservice.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -31,6 +32,12 @@ public class MyUser {
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy="owner")
+    private List<Follow> owner;
+
+    @OneToMany(mappedBy="follower")
+    private List<Follow> followers;
 
     @PrePersist
     protected void onCreate() {

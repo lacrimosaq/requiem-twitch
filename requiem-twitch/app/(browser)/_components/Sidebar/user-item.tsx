@@ -2,7 +2,7 @@
 
 import { useSidebar } from "@/store/use-sidebar";
 import { Avatar } from "flowbite-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface UserItemProps{
     username: string;
@@ -15,11 +15,12 @@ export const UserItem = ({
     avatar,
     isLive
 }: UserItemProps) => {
+    const router = useRouter();
     const pathname = usePathname();
     const { collapsed } = useSidebar((state) => state);
 
     return (
-        <button className={"flex px-2 w-full h-12 hover:bg-slate-600 items-center" 
+        <button onClick={() => {router.push(`/${username}`);}} className={"flex px-2 w-full h-12 hover:bg-slate-600 items-center" 
         + (collapsed ? " justify-center" : " justify-start") }>
             <Avatar alt="User avatar" img={avatar} className={(isLive ? "grayscale-0 " : "grayscale ") + " w-10 "} rounded />
             {!collapsed && (
