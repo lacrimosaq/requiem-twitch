@@ -7,15 +7,15 @@ import { UserItem } from "./user-item";
 //     data: Object[]
 // };
 
-export const Recommended = ({data}) => {
+export const Following = ({data}) => {
     const {
         collapsed
     } = useSidebar((state) => state);
 
     return(
         <div>{!collapsed && data.length > 0 &&(
-            <div className="pl-2 mb-3 mt-5">
-                <p className="text-sm text-white">Recommended</p>
+            <div className="pl-2 mb-3">
+                <p className="text-sm text-white">Following</p>
             </div>
         )}       
         <ul>

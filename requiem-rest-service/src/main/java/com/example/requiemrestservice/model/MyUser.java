@@ -39,6 +39,9 @@ public class MyUser {
     @OneToMany(mappedBy="follower")
     private List<Follow> followers;
 
+    @OneToMany(mappedBy="user")
+    private List<Stream> streams;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

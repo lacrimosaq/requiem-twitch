@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Recommended } from "./recommended";
 import { Toggle, ToggleSkeleton } from "./toggle";
 import { Wrapper } from "./wrapper";
+import { Following } from "./following";
 
 export const Sidebar = () => {
     const [recommended, setRecommended] = useState<any| null>([]);
+    const [following, setFollowing] = useState<any| null>([]);
 
     // const CreatePromise = async () => {
     //     // console.log("chmo");
@@ -15,9 +17,28 @@ export const Sidebar = () => {
     // }
 
     useEffect(() => {
+        if(localStorage.getItem("id") !== null) LoadFollowing()
         LoadRecommended();
     }, []);
     
+    const LoadFollowing = () => {
+        // let headers = new Headers();
+        // headers.append('Content-Type', 'application/json');
+        fetch("http://localhost:8080/follow/following/" + (localStorage.getItem("id")), {
+            method: "GET",
+            headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken"), 'Content-Type': 'application/json'},
+        }).then(resp => {
+            if (resp.status !== 200) {
+                throw new Error('User not found');
+            }
+            return resp.json()
+        }).then(json => {
+            setFollowing(json);
+        }).catch((err) => {
+            console.log('Failed :' + err.message);
+        });
+    }
+
     const LoadRecommended = () => {
         // let headers = new Headers();
         // headers.append('Content-Type', 'application/json');
@@ -40,7 +61,8 @@ export const Sidebar = () => {
         <div>
             <Wrapper>
                 <Toggle/>
-                <div className="pt-4 md:pt-0">
+                <div className="pt-4 lg:pt-0">
+                    <Following data={following}/>
                     <Recommended data={recommended}/>
                 </div>
             </Wrapper>
@@ -50,7 +72,7 @@ export const Sidebar = () => {
 
 export const  SidebarSkeleton = () => {
     return(
-    <aside className= "fixed left-0 flex flex-col h-full bg-slate-700 border-r border-[#2d2E35] z-50 md:w-[60px] w-[256px]">
+    <aside className= "fixed left-0 flex flex-col h-full bg-slate-700 border-r border-[#2d2E35] z-50 lg:w-[60px] w-[256px]">
         <ToggleSkeleton/>
     </aside>
     );

@@ -1,10 +1,13 @@
 import { Dropdown, Avatar } from "flowbite-react";
-import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const AvatarMenu = ({setJwtToken}) => {
-  // useEffect(() => {
-  //     setJwtToken(localStorage.getItem("jwtToken"));
-  // }, [localStorage.getItem("jwtToken")]);
+  const [username, setUsername] = useState<string| null>();
+  useEffect(() => {
+      setUsername(localStorage.getItem("username"))
+      setJwtToken(localStorage.getItem("jwtToken"));
+  }, []); //[localStorage.getItem("jwtToken")]] //error fix(delete this may provide bugs)
     return(
         <Dropdown
         label={<Avatar alt="User settings" img="/default_avatar.jpg" rounded />}
@@ -12,16 +15,17 @@ export const AvatarMenu = ({setJwtToken}) => {
         inline
       >
         <Dropdown.Header>
-          <span className="block text-sm">{localStorage.getItem("username")}</span>
+          <span className="block text-sm">{username}</span>
           <span className="block truncate text-sm font-medium">name@flowbite.com</span>
         </Dropdown.Header>
-        <Dropdown.Item><a href={`u/${localStorage.getItem("username")}`}>Dashboard</a></Dropdown.Item>
+        <Dropdown.Item><a href={`/`}>Back to Watching</a></Dropdown.Item>
         <Dropdown.Item>Settings</Dropdown.Item>
         <Dropdown.Item>Earnings</Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item onClick={() => {
           localStorage.clear();
           setJwtToken(localStorage.getItem("jwtToken")); //maybe just refresh)
+          redirect("/");
         }}>Log out</Dropdown.Item>
       </Dropdown>
 

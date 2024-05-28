@@ -23,7 +23,7 @@ export const FollowButton = ({
 
     const FollowApi = async () => {
         setIsLoading(true);
-        await fetch("http://localhost:8080/follow/following/" + userid + "?idfrom=" + localStorage.getItem("id"), {
+        await fetch("http://localhost:8080/follow/follow/" + userid + "?idfrom=" + localStorage.getItem("id"), {
             method: "POST",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken"), 'Content-Type': 'application/json'},
         }).then(resp => {

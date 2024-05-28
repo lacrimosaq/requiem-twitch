@@ -1,25 +1,19 @@
-"use client";
-import { useEffect } from "react";
-import { initFlowbite } from "flowbite";
+"use client"
 
-import { useSidebar } from "@/store/use-sidebar";
-import { Tooltip } from "@nextui-org/tooltip";
+import { useDashboardSidebar } from "@/store/use-dashboard-sidebar";
 import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react";
 
 export const Toggle = () => {
     const {
         collapsed,
+        disappeared,
         onExpand,
         onCollapse
-    } = useSidebar((state) => state);
-
-    useEffect(() => {
-        initFlowbite();
-    }, [collapsed]);
+    } = useDashboardSidebar((state) => state)
 
     return(
         <>
-            {collapsed && (
+            {(collapsed && !disappeared) && (
                 <div className="hidden lg:flex w-full items-center justify-center pt-4 mb-4">
                     <button 
                     data-tooltip-target="tooltip-right" data-tooltip-placement="right" type="button" 
@@ -34,10 +28,10 @@ export const Toggle = () => {
                     </div>
                 </div>
             )}
-            {!collapsed && (
+            {(!collapsed && !disappeared) && (
                 <div className="p-3 pl-2 mb-2 hidden lg:flex items-center w-full">
                     <p className="font-semibold text-white">
-                        For you
+                        Dashboard
                     </p>
                     <button data-tooltip-target="tooltip-right" data-tooltip-placement="right" type="button"  
                         className="h-auto p-2 ml-auto hover:bg-slate-500 rounded" 
@@ -53,20 +47,5 @@ export const Toggle = () => {
                 </div>
             )}
         </>
-    );
-}
-
-export const ToggleSkeleton = () => {
-    return(
-        <div className="lg:hidden p-3 pl-2 mb-2 flex items-center w-full">
-            <p className="font-semibold text-white">
-                For you
-            </p>
-            <button data-tooltip-target="tooltip-right" data-tooltip-placement="right" type="button"  
-                className="h-auto p-2 ml-auto hover:bg-slate-500 rounded" 
-            >
-                <ArrowLeftFromLine className="h-4 w-4" color="white"/>
-            </button>
-        </div>
     );
 }
