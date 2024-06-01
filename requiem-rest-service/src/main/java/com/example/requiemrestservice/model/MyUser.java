@@ -39,8 +39,8 @@ public class MyUser {
     @OneToMany(mappedBy="follower")
     private List<Follow> followers;
 
-    @OneToMany(mappedBy="user")
-    private List<Stream> streams;
+    @OneToOne(mappedBy="user")
+    private Stream stream;
 
     @PrePersist
     protected void onCreate() {

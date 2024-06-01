@@ -31,11 +31,15 @@ const LoginForm = ({stateChanger, ...rest}) => {
               headers: headers,
               body: JSON.stringify(loginobj)
           }).then(resp => {
-              status = resp.status;
-              if (resp.status !== 200) {
-                  throw new Error('User not found');
+              if (!resp.ok) {
+                return resp.text().then(text => { throw new Error(text); });
               }
-              return resp.json()
+              const contentType = resp.headers.get("content-type");
+              if (contentType && contentType.includes("application/json")) {
+                return resp.json();
+              } else {
+                return resp.text();
+              }
           }).then(json => {
               localStorage.setItem('id', json.user.id);
               localStorage.setItem('username', json.user.username);

@@ -18,7 +18,6 @@ export const NavItem= ({
     href,
     isActive
 }: NavItemProps) => {
-
     const{
         collapsed,
         disappeared
@@ -26,12 +25,13 @@ export const NavItem= ({
 
     return(
         !disappeared &&
-        <button className={cn("flex w-full h-12 my-2",
+        <div className="px-1">
+        <button className={cn("flex w-full h-12 mb-2 items-center rounded",
             collapsed ? "justify-center" : "justify-start",
-            isActive && "bg-accent"
+            isActive ? "bg-red-600" : "hover:bg-slate-400"
         )}>
-            <Link href={href}>
-                <div className="flex items-center gap-x-4 ">
+            <Link href={href} className={!collapsed ? "w-full" : ""}>
+                <div className="flex items-center gap-x-4 py-3">
                     <Icon color="white" className={cn(
                         "h-5 w-5",
                         collapsed ? "mr-0" : "ms-4 mr-2"
@@ -41,6 +41,6 @@ export const NavItem= ({
                     }
                 </div>
             </Link>
-        </button>
+        </button></div>
     );
 }

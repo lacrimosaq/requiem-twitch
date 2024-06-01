@@ -1,7 +1,9 @@
 package com.example.requiemrestservice.controller;
 
 import com.example.requiemrestservice.model.MyUser;
+import com.example.requiemrestservice.model.Stream;
 import com.example.requiemrestservice.service.MyUserService;
+import com.example.requiemrestservice.service.StreamService;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,9 @@ import java.util.Objects;
 public class AuthController {
     @Autowired
     private MyUserService myUserService;
+
+    @Autowired
+    private StreamService streamService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -70,6 +75,13 @@ public class AuthController {
 
             try {
                 myUserService.save(user);
+                Stream stream = new Stream();
+                stream.setName(user.getUsername() + "'s stream");
+                stream.setLive(false);
+                stream.setFollowerChat(false);
+                stream.setChatDelay(0);
+                stream.setUser(user);
+                streamService.save(stream);
 
                 String jwtToken = createJwtToken(user);
                 var response = new HashMap<String, Object>();

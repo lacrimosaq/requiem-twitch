@@ -21,11 +21,11 @@ public class Stream {
 
     private String streamKey;
 
-    private Boolean isLive = false;
+    private Boolean isLive;
 
-    private Boolean isFollowerChat = false;
+    private Boolean isFollowerChat;
 
-    private Integer chatDelay = 0;
+    private Integer chatDelay;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -33,7 +33,7 @@ public class Stream {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private MyUser user;
 
@@ -62,7 +62,7 @@ public class Stream {
 
 
 
-    
+
 
     public Integer getId() {
         return id;

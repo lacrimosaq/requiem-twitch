@@ -15,7 +15,7 @@ export const AvatarMenu = ({setJwtToken}) => {
           <span className="block text-sm">{localStorage.getItem("username")}</span>
           <span className="block truncate text-sm font-medium">name@flowbite.com</span>
         </Dropdown.Header>
-        <Dropdown.Item><a href={`u/${localStorage.getItem("username")}`}>Dashboard</a></Dropdown.Item>
+        <Dropdown.Item><a href={`u/${localStorage.getItem("username")}/stream`}>Dashboard</a></Dropdown.Item>
         <Dropdown.Item>Settings</Dropdown.Item>
         <Dropdown.Item>Earnings</Dropdown.Item>
         <Dropdown.Divider />

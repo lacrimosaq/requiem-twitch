@@ -1,5 +1,5 @@
 import { Dropdown, Avatar } from "flowbite-react";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export const AvatarMenu = ({setJwtToken}) => {
@@ -14,20 +14,22 @@ export const AvatarMenu = ({setJwtToken}) => {
         arrowIcon={false}
         inline
       >
-        <Dropdown.Header>
-          <span className="block text-sm">{username}</span>
-          <span className="block truncate text-sm font-medium">name@flowbite.com</span>
-        </Dropdown.Header>
-        <Dropdown.Item><a href={`/`}>Back to Watching</a></Dropdown.Item>
-        <Dropdown.Item>Settings</Dropdown.Item>
-        <Dropdown.Item>Earnings</Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item onClick={() => {
-          localStorage.clear();
-          setJwtToken(localStorage.getItem("jwtToken")); //maybe just refresh)
-          redirect("/");
-        }}>Log out</Dropdown.Item>
-      </Dropdown>
+          <Dropdown.Header>
+            <span className="block text-sm">{username}</span>
+            <span className="block truncate text-sm font-medium">name@flowbite.com</span>
+          </Dropdown.Header>
+          <Dropdown.Item><a href={`/`}>Back to Watching</a></Dropdown.Item>
+          <Dropdown.Item>Settings</Dropdown.Item>
+          <Dropdown.Item>Earnings</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item>
+              <Link href="/" onClick={() => {
+              localStorage.clear();
+              setJwtToken(localStorage.getItem("jwtToken")); //maybe just refresh)
+            }}>Log out
+              </Link> 
+            </Dropdown.Item>
+        </Dropdown>
 
     );
 }
