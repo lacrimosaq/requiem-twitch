@@ -24,7 +24,7 @@ export const Following = ({data}) => {
                     key={user.id} 
                     username={user.username}
                     avatar={user.avatar}
-                    isLive={true}
+                    isLive={user.live}
                 />
             ))}
         </ul>

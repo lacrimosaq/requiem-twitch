@@ -1,13 +1,17 @@
 package com.example.requiemrestservice.controller;
 
+import com.example.requiemrestservice.dto.UserDto;
 import com.example.requiemrestservice.model.Follow;
 import com.example.requiemrestservice.model.MyUser;
+import com.example.requiemrestservice.model.Stream;
 import com.example.requiemrestservice.service.FollowService;
 import com.example.requiemrestservice.service.MyUserService;
+import com.example.requiemrestservice.service.StreamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,6 +25,8 @@ public class FollowController {
     private MyUserService myUserService;
     @Autowired
     private FollowService followService;
+    @Autowired
+    private StreamService streamService;
 
     @GetMapping(path="/isFollowing/{id}")
     public @ResponseBody ResponseEntity<?> isFollowing(@PathVariable Integer id, @RequestParam Integer idfrom) {
@@ -92,11 +98,30 @@ public class FollowController {
                     .filter(f -> f.getFollower().getId().equals(myUser.getId()))
                     .toList();
 
-            List<MyUser> result = allUsers.stream()
+            List<MyUser> usersResult = allUsers.stream()
                     .filter(user -> filteredFollows.stream()
                             .anyMatch(follow -> follow.getOwner().getId().equals(user.getId())))
                     .toList();
+            List<UserDto> result = new ArrayList<>();
+            List<Stream> streams = (List<Stream>) streamService.getAll();
+            for(MyUser user : usersResult){
+                UserDto userDto = new UserDto();
+                userDto.setId(user.getId());
+                userDto.setUsername(user.getUsername());
+                userDto.setEmail(user.getEmail());
+                userDto.setAvatar(user.getAvatar());
+                userDto.setInfo(user.getInfo());
+                userDto.setRole(user.getRole());
+                userDto.setCreatedAt(user.getCreatedAt());
+                userDto.setUpdatedAt(user.getUpdatedAt());
+                Optional<Stream> optional = streams.stream()
+                        .filter(u -> u.getId().equals(id))
+                        .findFirst();
+                Stream stream = optional.orElse(null);
+                userDto.setLive(stream.getLive());
 
+                result.add(userDto);
+            }
             return ResponseEntity.ok(result);
         }
         return ResponseEntity.badRequest().body("Not such a user!");
@@ -114,10 +139,30 @@ public class FollowController {
                     .filter(f -> f.getOwner().getId().equals(myUser.getId()))
                     .toList();
 
-            List<MyUser> result = allUsers.stream()
+            List<MyUser> usersResult = allUsers.stream()
                     .filter(user -> filteredFollows.stream()
                             .anyMatch(follow -> follow.getFollower().getId().equals(user.getId())))
                     .toList();
+            List<UserDto> result = new ArrayList<>();
+            List<Stream> streams = (List<Stream>) streamService.getAll();
+            for(MyUser user : usersResult){
+                UserDto userDto = new UserDto();
+                userDto.setId(user.getId());
+                userDto.setUsername(user.getUsername());
+                userDto.setEmail(user.getEmail());
+                userDto.setAvatar(user.getAvatar());
+                userDto.setInfo(user.getInfo());
+                userDto.setRole(user.getRole());
+                userDto.setCreatedAt(user.getCreatedAt());
+                userDto.setUpdatedAt(user.getUpdatedAt());
+                Optional<Stream> optional = streams.stream()
+                        .filter(u -> u.getId().equals(id))
+                        .findFirst();
+                Stream stream = optional.orElse(null);
+                userDto.setLive(stream.getLive());
+
+                result.add(userDto);
+            }
 
             return ResponseEntity.ok(result);
         }

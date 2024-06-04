@@ -168,6 +168,52 @@ func CreateIngresses(hostIdentity int, ingressType string) (*livekit.IngressInfo
 	return ingressInfo, nil
 }
 
+func UpdateIngressesStatus() error {
+	fmt.Println("UpdateIngressesStatus!")
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/requiemDb?parseTime=true")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	streams, _ := services.StreamGetAll(db)
+
+	var config = utils.LoadConfig()
+
+	client := lksdk.NewIngressClient(config.LiveKitAPIURL, config.LiveKitAPIKey, config.LiveKitAPISecret)
+
+	// reset ingress
+
+	ingresses, err := client.ListIngress(context.Background(), &livekit.ListIngressRequest{})
+	if err != nil {
+		return fmt.Errorf("error listing ingress: %v", err)
+	}
+
+	if ingresses != nil && ingresses.Items != nil {
+		for _, item := range ingresses.Items {
+			for _, stream := range streams {
+				if item.IngressId == stream.IngressID.String {
+
+					if item.State.Status == livekit.IngressState_ENDPOINT_PUBLISHING {
+						if stream.IsLive == false {
+							stream.IsLive = true
+							fmt.Println("ChangeOnTrue")
+							services.StreamUpdate(db, &stream)
+						}
+					} else if item.State.Status == livekit.IngressState_ENDPOINT_INACTIVE {
+						if stream.IsLive == true {
+							stream.IsLive = false
+							fmt.Println("ChangeOnFalse")
+							services.StreamUpdate(db, &stream)
+						}
+					}
+				}
+			}
+		}
+	}
+	return nil
+}
+
 func ToNullString(s string) sql.NullString {
 	if s == "" {
 		return sql.NullString{String: "", Valid: false}
