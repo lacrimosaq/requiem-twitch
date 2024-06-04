@@ -1,18 +1,63 @@
 "use client";
 
 import { cn } from "@/utils/cn";
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import { initFlowbite } from "flowbite";
+import { IngressInput } from "livekit-server-sdk";
+import { toast } from "sonner";
+
+interface ConnectModalProps {
+    stream: any;
+    setStream: Dispatch<any>;
+};
 
 export const ConnectModal = () => {
+    const RTMP = String(IngressInput.RTMP_INPUT);
+    const WHIP = String(IngressInput.WHIP_INPUT);
+    type IngressType = typeof RTMP | typeof WHIP;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [ingressType, setIngressType] = useState<IngressType>(RTMP);
+    const [isLoading, startLoading] = useState(false);
+
+
     useEffect(() => {
         initFlowbite;
     }, []);
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const toggleModal = () => {
+        if(isLoading) return;
         setIsModalOpen(!isModalOpen);
     };
+
+    const GenerateIngress = () => {
+        console.log(ingressType);
+        // let headers = new Headers();
+        // headers.append('Content-Type', 'application/json');
+        // fetch("http://localhost:9000/create-ingress/" + localStorage.getItem("id") + "?ingressType=" + ingressType, {
+        //       method: "POST",
+        //       headers: headers,
+        //   }).then(resp => {
+        //       if (!resp.ok) {
+        //         return resp.text().then(text => { throw new Error(text); });
+        //       }
+        //       const contentType = resp.headers.get("content-type");
+        //       if (contentType && contentType.includes("application/json")) {
+        //         return resp.json();
+        //       } else {
+        //         return resp.text();
+        //       }
+        //   }).then(json => {
+        //     toast.error('Generation successful!');
+        //     console.log("Token from login" + json);
+        //     //   if(status == 200) window.location.reload(); 
+        //   }).catch((err) => {
+        //       console.log('Failed :' + err.message);
+        //       toast.error('Something went wrong!');
+        //     //   setError('Failed :' + err.message);
+        //   }).finally(() =>{
+        //     startLoading(false);
+        //   });
+    }
 
     return (
         <div className="dark">
@@ -51,10 +96,14 @@ export const ConnectModal = () => {
                                     
                                     <form className="max-w-sm mx-auto">
                                     <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingress Type</label>
-                                    <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-white-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-white-500 dark:focus:border-white-500">
+                                    <select id="countries" 
+                                        value={ingressType}
+                                        onChange={(event) => setIngressType(event.target.value)}
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-white-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-white-500 dark:focus:border-white-500"
+                                    >
                                         {/* <option selected>Ingress Type</option> */}
-                                        <option value="RTMP">RTMP</option>
-                                        <option value="WHIP">WHIP</option>
+                                        <option value={RTMP}>RTMP</option>
+                                        <option value={WHIP}>WHIP</option>
                                     </select>
                                     </form>
 
@@ -65,8 +114,13 @@ export const ConnectModal = () => {
                                 </div>
                                 </div>
                                 <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button type="button" className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Generate</button>
-                                <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
+                                {!isLoading ? <button type="button" onClick={GenerateIngress} className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
+                                    Generate
+                                </button> :
+                                 <button type="button" className="inline-flex w-full justify-center rounded-md bg-red-800 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto">
+                                    Generating
+                                </button>}
+                                <button type="button" onClick={toggleModal} className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
                                 </div>
                         </div>
                     </div>

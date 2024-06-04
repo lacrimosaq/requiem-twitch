@@ -58,7 +58,7 @@ const LoginForm = ({stateChanger, ...rest}) => {
 
   return (
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-black">Login</h2>
         <form onSubmit={LoginApi}>
           <div className="mb-4">
             <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
