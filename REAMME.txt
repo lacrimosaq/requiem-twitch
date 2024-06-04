@@ -2,5 +2,4 @@ PORTS
 3000 - Next.js Client
 8080 - Spring Boot Java API
 3306 - MySQL Server
-7880 - Livekit Server
 9000 - Golang API

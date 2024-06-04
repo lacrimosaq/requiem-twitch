@@ -40,7 +40,7 @@ const KeysPage = () => {
                     Keys & URLs
                 </h1>
 
-                <ConnectModal/>
+                <ConnectModal stream={streamData} setStream={setStreamData}/>
 
             </div>
             <div>

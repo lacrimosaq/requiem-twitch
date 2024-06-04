@@ -8,7 +8,7 @@ import (
 )
 
 func StreamFindById(db *sql.DB, id int) (*models.Stream, error) {
-	query := "SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at FROM streams WHERE id = ?"
+	query := "SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at FROM stream WHERE id = ?"
 	row := db.QueryRow(query, id)
 
 	var stream models.Stream
@@ -21,7 +21,7 @@ func StreamFindById(db *sql.DB, id int) (*models.Stream, error) {
 
 func StreamUpdate(db *sql.DB, stream *models.Stream) error {
 	query := `
-        UPDATE streams
+        UPDATE stream
         SET chat_delay = ?, ingress_id = ?, is_follower_chat = ?, is_live = ?, name = ?, server_url = ?, stream_key = ?, thumbnail = ?, user_id = ?, updated_at = NOW()
         WHERE id = ?
     `
@@ -29,7 +29,7 @@ func StreamUpdate(db *sql.DB, stream *models.Stream) error {
 	return err
 }
 func StreamFindByUserId(db *sql.DB, userId int) ([]models.Stream, error) {
-	query := "SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at FROM streams WHERE user_id = ?"
+	query := "SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at FROM stream WHERE user_id = ?"
 	rows, err := db.Query(query, userId)
 	if err != nil {
 		return nil, err

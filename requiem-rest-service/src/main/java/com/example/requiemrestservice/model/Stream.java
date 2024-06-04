@@ -15,7 +15,7 @@ public class Stream {
 
     private String thumbnail;
 
-    private Integer ingressId;
+    private String ingressId;
 
     private String serverUrl;
 
@@ -88,11 +88,11 @@ public class Stream {
         this.thumbnail = thumbnail;
     }
 
-    public Integer getIngressId() {
+    public String getIngressId() {
         return ingressId;
     }
 
-    public void setIngressId(Integer ingressId) {
+    public void setIngressId(String ingressId) {
         this.ingressId = ingressId;
     }
 

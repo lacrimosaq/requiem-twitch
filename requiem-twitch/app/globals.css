@@ -11,7 +11,7 @@ body,
 
 
 :root {
-  --foreground-rgb: 255, 255, 255;
+  --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 10, 10, 10;
   --background-end-rgb: 10, 10, 10;
 }

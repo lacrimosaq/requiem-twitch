@@ -3,6 +3,8 @@ package models
 import (
 	"database/sql"
 	"time"
+
+	"github.com/jmoiron/sqlx/types"
 )
 
 type User struct {
@@ -20,9 +22,9 @@ type User struct {
 type Stream struct {
 	ID             int            `json:"id"`
 	ChatDelay      sql.NullInt32  `json:"chat_delay"`
-	IngressID      sql.NullInt32  `json:"ingress_id"`
-	IsFollowerChat sql.NullBool   `json:"is_follower_chat"`
-	IsLive         sql.NullBool   `json:"is_live"`
+	IngressID      sql.NullString `json:"ingress_id"`
+	IsFollowerChat types.BitBool  `json:"is_follower_chat"`
+	IsLive         types.BitBool  `json:"is_live"`
 	Name           sql.NullString `json:"name"`
 	ServerURL      sql.NullString `json:"server_url"`
 	StreamKey      sql.NullString `json:"stream_key"`

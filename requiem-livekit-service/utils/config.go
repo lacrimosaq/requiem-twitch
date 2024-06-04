@@ -12,8 +12,8 @@ type Config struct {
 
 func LoadConfig() *Config {
 	return &Config{
-		LiveKitAPIURL:    "http://127.0.0.1:7880",
-		LiveKitAPIKey:    "devkey", //os.Getenv("devkey")
-		LiveKitAPISecret: "secret", //os.Getenv("secret")
+		LiveKitAPIURL:    "https://requiem-project-u5fcefmd.livekit.cloud",
+		LiveKitAPIKey:    "APIG8z6bb7Lw88m",                              //os.Getenv("devkey")
+		LiveKitAPISecret: "gd6l8g1UfVN22pOgKJRyW9ij2YmmbyeQRqFi4fx2EEoB", //os.Getenv("secret")
 	}
 }

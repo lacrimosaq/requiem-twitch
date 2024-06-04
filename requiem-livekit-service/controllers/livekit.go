@@ -83,6 +83,7 @@ func CreateIngresses(hostIdentity int, ingressType string) (*livekit.IngressInfo
 			_, err := roomClient.DeleteRoom(context.Background(), &livekit.DeleteRoomRequest{
 				Room: room.Name,
 			})
+			fmt.Println("DeleteRoom")
 			if err != nil {
 				return nil, fmt.Errorf("error deleting room %s: %v", room.Name, err)
 			}
@@ -96,10 +97,12 @@ func CreateIngresses(hostIdentity int, ingressType string) (*livekit.IngressInfo
 				_, err := client.DeleteIngress(context.Background(), &livekit.DeleteIngressRequest{
 					IngressId: ingress.IngressId,
 				})
+				fmt.Println("DeleteIngress 1.0")
 				if err != nil {
 					return nil, fmt.Errorf("error deleting ingress %s: %v", ingress.IngressId, err)
 				}
 			}
+			fmt.Println("DeleteIngress 2.0")
 		}
 	}
 	fmt.Println("DeleteIngress")
@@ -150,9 +153,8 @@ func CreateIngresses(hostIdentity int, ingressType string) (*livekit.IngressInfo
 	}
 
 	streamByUser := streamsByUser[0]
-	ingressId, _ := strconv.Atoi(ingressInfo.IngressId)
 
-	streamByUser.IngressID = sql.NullInt32{Int32: int32(ingressId), Valid: true}
+	streamByUser.IngressID = ToNullString(ingressInfo.IngressId)
 	fmt.Printf("ingressInfo.IngressId = %v\n", ingressInfo.IngressId)
 	streamByUser.ServerURL = ToNullString(ingressInfo.Url)
 	fmt.Printf("ingressInfo.Url = %s\n", ingressInfo.Url)

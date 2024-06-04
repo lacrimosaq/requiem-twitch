@@ -11,12 +11,14 @@ interface ConnectModalProps {
     setStream: Dispatch<any>;
 };
 
-export const ConnectModal = () => {
-    const RTMP = String(IngressInput.RTMP_INPUT);
-    const WHIP = String(IngressInput.WHIP_INPUT);
-    type IngressType = typeof RTMP | typeof WHIP;
+export const ConnectModal = ({
+    stream,
+    setStream,
+}: ConnectModalProps) => {
+    const RTMP = "RTMP_INPUT";
+    const WHIP = "WHIP_INPUT";
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [ingressType, setIngressType] = useState<IngressType>(RTMP);
+    const [ingressType, setIngressType] = useState<string>(RTMP);
     const [isLoading, startLoading] = useState(false);
 
 
@@ -30,33 +32,38 @@ export const ConnectModal = () => {
     };
 
     const GenerateIngress = () => {
-        console.log(ingressType);
-        // let headers = new Headers();
-        // headers.append('Content-Type', 'application/json');
-        // fetch("http://localhost:9000/create-ingress/" + localStorage.getItem("id") + "?ingressType=" + ingressType, {
-        //       method: "POST",
-        //       headers: headers,
-        //   }).then(resp => {
-        //       if (!resp.ok) {
-        //         return resp.text().then(text => { throw new Error(text); });
-        //       }
-        //       const contentType = resp.headers.get("content-type");
-        //       if (contentType && contentType.includes("application/json")) {
-        //         return resp.json();
-        //       } else {
-        //         return resp.text();
-        //       }
-        //   }).then(json => {
-        //     toast.error('Generation successful!');
-        //     console.log("Token from login" + json);
-        //     //   if(status == 200) window.location.reload(); 
-        //   }).catch((err) => {
-        //       console.log('Failed :' + err.message);
-        //       toast.error('Something went wrong!');
-        //     //   setError('Failed :' + err.message);
-        //   }).finally(() =>{
-        //     startLoading(false);
-        //   });
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        fetch("http://localhost:9000/create-ingress/" + localStorage.getItem("id") + "?ingressType=" + ingressType, {
+              method: "POST",
+              headers: headers,
+          }).then(resp => {
+              if (!resp.ok) {
+                return resp.text().then(text => { throw new Error(text); });
+              }
+              const contentType = resp.headers.get("content-type");
+              if (contentType && contentType.includes("application/json")) {
+                return resp.json();
+              } else {
+                return resp.text();
+              }
+          }).then(json => {
+            stream.ingressId = json.ingress_id;
+            stream.streamKey = json.stream_key;
+            stream.serverUrl = json.url;
+            setStream(stream);
+            setIsModalOpen(!isModalOpen);
+            toast.error('Generation successful!');
+            console.log("Stream from json" + json);
+            console.log("Stream from stream" + stream);
+            //   if(status == 200) window.location.reload(); 
+          }).catch((err) => {
+              console.log('Failed :' + err.message);
+              toast.error('Something went wrong!');
+            //   setError('Failed :' + err.message);
+          }).finally(() =>{
+            startLoading(false);
+          });
     }
 
     return (
