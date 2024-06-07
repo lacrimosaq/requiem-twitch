@@ -18,6 +18,7 @@ func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/create-ingress/{hostIdentity}", myhandlers.CreateIngressHandler).Methods("POST")
+	r.HandleFunc("/create-token/{hostIdentity}", myhandlers.CreateTokenHandler).Methods("POST")
 	r.HandleFunc("/test", myhandlers.TestHandler).Methods("GET")
 
 	corsMiddleware := handlers.CORS(

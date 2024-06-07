@@ -10,6 +10,8 @@ import (
 	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
+	guuid "github.com/google/uuid"
+	"github.com/livekit/protocol/auth"
 	livekit "github.com/livekit/protocol/livekit"
 	lksdk "github.com/livekit/server-sdk-go"
 )
@@ -168,6 +170,51 @@ func CreateIngresses(hostIdentity int, ingressType string) (*livekit.IngressInfo
 	return ingressInfo, nil
 }
 
+func CreateViewerToken(hostIdentity int, viewerId int) (string, error) {
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/requiemDb?parseTime=true")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	viewer := new(models.User)
+	if viewerId > 0 {
+		viewer, _ = services.UserFindById(db, viewerId)
+	} else {
+		viewer.ID = 0
+		viewer.Username = "guest#" + guuid.New().String()
+	}
+
+	host, err := services.UserFindById(db, hostIdentity)
+	if err != nil {
+		return "", fmt.Errorf("error finding host by ID: %v", err)
+	}
+	if host == nil {
+		return "", fmt.Errorf("host with ID %d does not exist", hostIdentity)
+	}
+
+	var config = utils.LoadConfig()
+	token := auth.NewAccessToken(config.LiveKitAPIKey, config.LiveKitAPISecret)
+	if viewerId == hostIdentity {
+		token.SetIdentity("host#" + fmt.Sprint(viewer.ID))
+	} else {
+		token.SetIdentity(fmt.Sprint(viewer.ID))
+	}
+	token.SetName(viewer.Username)
+
+	canPublish := false
+	canPublishData := true
+	grant := &auth.VideoGrant{
+		Room:           fmt.Sprint(host.ID),
+		RoomJoin:       true,
+		CanPublish:     &canPublish,
+		CanPublishData: &canPublishData,
+	}
+	token.AddGrant(grant)
+
+	return token.ToJWT()
+
+}
 func UpdateIngressesStatus() error {
 	fmt.Println("UpdateIngressesStatus!")
 	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/requiemDb?parseTime=true")

@@ -28,3 +28,24 @@ func UserFindById(db *sql.DB, id int) (*models.User, error) {
 	}
 	return &user, nil
 }
+
+func UserFindByUsername(db *sql.DB, username string) (*models.User, error) {
+	query := "SELECT id, username, avatar, email, info, password, role, created_at, updated_at FROM users WHERE username = ?"
+	row := db.QueryRow(query, username)
+	fmt.Println(row)
+
+	var user models.User
+	err := row.Scan(&user.ID, &user.Username, &user.Avatar, &user.Email, &user.Info, &user.Password, &user.Role, &user.CreatedAt, &user.UpdatedAt)
+	fmt.Println(user.ID)
+	fmt.Println(user.Username)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			fmt.Println("No user found with the given username")
+			return nil, nil
+		}
+		fmt.Printf("Error scanning row: %v\n", err)
+		return nil, err
+	}
+	return &user, nil
+}

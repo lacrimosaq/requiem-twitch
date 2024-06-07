@@ -2,6 +2,8 @@
 
 import { useDashboardSidebar } from "@/store/use-dashboard-sidebar";
 import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react";
+import { initFlowbite } from "flowbite";
+import { useEffect } from "react";
 
 export const Toggle = () => {
     const {
@@ -9,7 +11,11 @@ export const Toggle = () => {
         disappeared,
         onExpand,
         onCollapse
-    } = useDashboardSidebar((state) => state)
+    } = useDashboardSidebar((state) => state);
+
+    useEffect(() => {
+        initFlowbite();
+    }, [collapsed]);
 
     return(
         <>

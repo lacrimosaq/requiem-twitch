@@ -64,7 +64,6 @@ const UserPage = ({
             
         });
     }
-    const tmp = async (id) => {console.log(id);}
     
     const LoadIsFollow = async (id) => {
         await fetch("http://localhost:8080/follow/isFollowing/" + id + `?idfrom=${localStorage.getItem("id")}`, {
