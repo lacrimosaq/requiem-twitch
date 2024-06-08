@@ -13,9 +13,10 @@ const StreamPage = ({
     params,
 } : StreamPageProps) => {
     const [profile, setProfile] = useState({id : undefined, username : ""});
+    const [stream, setStream] = useState<any>({serverUrl: undefined, streamKey: undefined});
     const [isFollow, setIsFollow] = useState(false);
     useEffect(() => {
-        LoadHost();
+        LoadHost(); //LoadStream inside
     }, [])
     
     
@@ -38,7 +39,7 @@ const StreamPage = ({
             console.log('Failed :' + err.message);
         }).finally(() =>{
             // setIsLoading(false);
-            
+            LoadStream();
         });
     }
     // const LoadIsFollow = async (id) => {
@@ -63,13 +64,31 @@ const StreamPage = ({
     //         console.log('Failed :' + err.message);
     //     });
     // }
+    const LoadStream = async () => {
+        let status = 0;
+        await fetch("http://localhost:8080/stream/user/" + localStorage.getItem("id"), {
+            method: "GET",
+            headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken")},
+            // headers: headers,
+        }).then(resp => {
+            status = resp.status;
+            return resp.json()
+        }).then(json => {
+            setStream(json);
+        }).catch((err) => {
+            console.log('Failed :' + err.message);
+        }).finally(() =>{
+            // setIsLoading(false);
+            
+        });
+    }
 
 
     return(
         <div className="h-full">
             <StreamPlayer 
                 user={profile}
-                stream={null}
+                stream={stream}
                 isFollowing={true} //can be here only as host
             />
         </div>

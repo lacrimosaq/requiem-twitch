@@ -23,7 +23,7 @@ const DashboardLayout = ({params, children} : DashboardLayoutProps) => {
     return(
         <>
             <DashboardNavbar/>
-            <div className="flex">
+            <div className="flex"> {/*TODO ))*/}
                 <Sidebar/>
                 <Container>
                     {children}
