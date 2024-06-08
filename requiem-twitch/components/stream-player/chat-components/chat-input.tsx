@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChatInfo } from "./chat-info";
 import { Tv2Icon } from "lucide-react";
 import { cn } from "@/utils/cn";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ChatInputProps {
     onSubmit: () => void;
@@ -52,6 +53,8 @@ export const ChatInput = ({
                 <ChatInfo
                     chatDelayed={chatDelay}
                     isChatFollowersOnly={isChatFollowersOnly}
+                    isDelayBlocked={isDelayBlocked}
+                    isFollowing={isFollowing}
                 />
                 
                 <div className="w-full relative flex items-center">
@@ -84,5 +87,17 @@ export const ChatInput = ({
                 </button>
             </div>
         </form>
+    );
+}
+
+export const ChatInputSkelethon = () => {
+    return(
+        <div className="flex flex-col items-center p-3">
+            <Skeleton className="w-full h-10"/>
+            <div className="flex items-center ml-auto">
+                <Skeleton className="w-7 h-7"/>
+                <Skeleton className="w-7 h-12"/>
+            </div>
+        </div>
     );
 }

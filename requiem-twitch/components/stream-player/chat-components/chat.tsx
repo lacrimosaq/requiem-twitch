@@ -4,9 +4,10 @@ import { ChatVariant, useChatSidebar } from "@/store/use-chat-sidebar";
 import { useChat, useConnectionState, useRemoteParticipant } from "@livekit/components-react";
 import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import { ChatHeader } from "./chat-header";
-import { ChatInput } from "./chat-form";
-import { ChatMessages } from "./chat-messages";
+import { ChatHeader, ChatHeaderSkeleton } from "./chat-header";
+import { ChatInput, ChatInputSkelethon } from "./chat-input";
+import { ChatMessages, ChatMessagesSkeleton } from "./chat-messages";
+import { ChatCommunity } from "./chat-community";
 
 interface ChatProps{
     hostName: string;
@@ -71,10 +72,21 @@ export const Chat = ({
                 </>
             )
             :(
-                <>
-                    <p>Community mode</p>
-                </>
+                <ChatCommunity
+                    hostName={hostName}
+                    viewerName={viewerName}
+                />
             )}
         </div>
     );
-}
+};
+
+export const ChatSkeleton = () => {
+    return(
+        <div className="flex flex-col-boreder-l border-b pt-0 h-[calc(100vh-80px)] border-2">
+            {/* <ChatHeaderSkeleton/> */}
+            {/* <ChatMessagesSkeleton/>
+            <ChatInputSkelethon/> */}
+        </div>
+    );
+};

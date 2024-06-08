@@ -3,25 +3,30 @@ import { useMemo } from "react";
 interface ChatInfoProps{
    chatDelayed : number;
    isChatFollowersOnly: boolean;
+   isDelayBlocked: boolean;
+   isFollowing: boolean;
 };
 
 export const ChatInfo = ({
     chatDelayed,
-    isChatFollowersOnly
+    isChatFollowersOnly,
+    isDelayBlocked,
+    isFollowing
 }: ChatInfoProps) => {
     const hint = useMemo(() => {
-        if(isChatFollowersOnly) return "You need to be a follower to chat.";
-        else if(chatDelayed > 0) return "Chat delayed by " + chatDelayed + "(s)";
+        if(isChatFollowersOnly && !isFollowing) return "You need to be a follower to chat.";
+        else if(chatDelayed > 0 && isDelayBlocked) return "Chat delayed by " + chatDelayed + "(s)";
         return "";
     }, [chatDelayed, isChatFollowersOnly]);
     const label = useMemo(() => {
-        if(isChatFollowersOnly) return "Followers-Only Chat";
-        else if(chatDelayed > 0) return "Slow-mode Chat";
+        if(isChatFollowersOnly && !isFollowing) return "Followers-Only Chat";
+        else if(chatDelayed > 0 && isDelayBlocked) return "Slow-mode Chat";
         return null;
-    }, [chatDelayed, isChatFollowersOnly]);
+    }, [chatDelayed, isChatFollowersOnly, isFollowing, isDelayBlocked]);
 
     return(
-        <div
+        <>
+        {label !== null && <div
             data-tooltip-target="tooltip-up-info" data-tooltip-placement="top" 
             className="p-2 text-white bg-slate-800 border border-slate-600 w-full rounded-t-md flex items-center gap-x-2"
         >
@@ -33,6 +38,7 @@ export const ChatInfo = ({
             <p className="text-xs font-semibold">
                 {label}
             </p>
-        </div>
+        </div>}
+        </>
     );
 }

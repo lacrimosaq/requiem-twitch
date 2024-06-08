@@ -3,12 +3,12 @@
 import { useViewerToken } from "@/webhooks/use-viewer-token";
 import { LiveKitRoom } from "@livekit/components-react";
 import { JwtPayload, jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner";
-import { Video } from "./video-components/video";
+import { Video, VideoSkeleton } from "./video-components/video";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { cn } from "@/utils/cn";
-import { Chat } from "./chat-components/chat";
+import { Chat, ChatSkeleton } from "./chat-components/chat";
 import { ChatToggle } from "./chat-components/chat-toggle";
 
 interface StreamPlayerProps{
@@ -21,6 +21,31 @@ export const StreamPlayer = ({
     stream,
     isFollowing
 } : StreamPlayerProps) => {
+    const [isMaxHeight, setIsMaxHeight] = useState(false);
+    const divRef = useRef<HTMLDivElement>(null);
+    let maxHeight = 0; // 75vh in pixels
+  
+    const checkHeight = () => {
+      if (divRef.current && divRef.current.clientHeight) {
+        const currentHeight = divRef.current.clientHeight;
+        setIsMaxHeight(currentHeight >= maxHeight );
+        console.log("isMaxHeight = " + isMaxHeight);
+        console.log("currentHeight = " + currentHeight);
+        console.log("maxHeight = " + maxHeight);
+      }
+    };
+  
+    useEffect(() => {
+        maxHeight = (0.75 * window.innerHeight) - 0.5;
+      window.addEventListener('resize', checkHeight);
+      window.addEventListener('scroll', checkHeight);
+      checkHeight(); // Initial check
+  
+      return () => {
+        window.removeEventListener('resize', checkHeight);
+        window.removeEventListener('scroll', checkHeight);
+      };
+    }, []);
 
     const {
         token,
@@ -56,11 +81,9 @@ export const StreamPlayer = ({
     //     }
     //     createToken();
     // }, []);
-    if(!token || !name || !identity){ //TODO IDENTITY EMPTY
+    if(!token || !name || !identity){ 
         return(
-            <div className="text-white">
-                Cannot watch stream
-            </div>
+            <StreamPlayerSkeleton/>
         );
     }
     
@@ -74,17 +97,22 @@ export const StreamPlayer = ({
             <LiveKitRoom
             token={token}
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
-            className={cn("grid grid-cols-1 lg:grid-cols-4  h-full", 
-                collapsed && "lg:grid-cols-2"
+            className={cn("flex flex-col lg:flex-row h-screen", 
+                // collapsed && "lg:grid-cols-2"
             )}
             >
-                 <div className="col-span-6 lg:col-span-3  hidden-scrollbar pb-10"> {/*lg:overflow-y-auto */}
+                 <div 
+                    className={cn("flex-1 relative bg-transparent lg:w-auto max-h-[75vh] ",
+                        isMaxHeight && "bg-black border-b"
+                    )}> {/*lg:overflow-y-auto */}
+                    <div
+                    ref={divRef} >
                     <Video
                         hostIdentity={user.id}
                         hostName={user.username}
-                    />
+                    /></div>
                 </div>
-                <div className={cn("col-span-1 ", collapsed && "hidden")}>
+                <div className={cn("w-full lg:w-[340px] bg-gray-400 ", collapsed && "hidden")}>
                     <Chat
                         viewerName={name}
                         hostName={user.username}
@@ -97,4 +125,17 @@ export const StreamPlayer = ({
             </LiveKitRoom>
         </>
     )
+};
+
+export const StreamPlayerSkeleton = () => {
+    return(
+        <div className="flex flex-col lg:flex-row h-screen">
+            <div className="flex-1 relative bg-transparent lg:w-auto max-h-[75vh]">
+                <VideoSkeleton/>
+            </div>
+            <div className="w-full lg:w-[340px] bg-gray-400">
+                <ChatSkeleton/>
+            </div>
+        </div>
+    );
 }
