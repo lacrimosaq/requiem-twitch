@@ -30,10 +30,21 @@ public class UserDto {
 
     private Integer followersCount;
 
+    private Integer viewersCount;
 
 
 
 
+
+
+
+    public Integer getViewersCount() {
+        return viewersCount;
+    }
+
+    public void setViewersCount(Integer viewerCount) {
+        this.viewersCount = viewerCount;
+    }
 
     public Integer getFollowersCount() {
         return followersCount;

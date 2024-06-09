@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/recommended/*").permitAll()
                         .requestMatchers("/user/profile/*").permitAll()
                         .requestMatchers("/stream/user/*").permitAll()
+                        .requestMatchers("/stream/recommended/*").permitAll()
                         .anyRequest().authenticated()
 
                 )

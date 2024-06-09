@@ -25,7 +25,7 @@ export const ChatMessages = ({
             )
         
             :(
-                <div className="flex flex-1 flex-col-reverse overflow-y-auto p-3 h-full">
+                <div className="flex flex-1 flex-col-reverse overflow-y-auto p-3 h-full overflow-x-hidden">
                     {messages.map((message) => (
                         <ChatMessage 
                         hostName={hostName}

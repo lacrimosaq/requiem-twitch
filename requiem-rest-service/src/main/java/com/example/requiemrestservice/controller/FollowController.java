@@ -116,10 +116,11 @@ public class FollowController {
                 userDto.setUpdatedAt(user.getUpdatedAt());
 
                 Optional<Stream> optional = streams.stream()
-                        .filter(u -> u.getId().equals(id))
+                        .filter(s -> s.getUser().getId().equals(user.getId()))
                         .findFirst();
                 Stream stream = optional.orElse(null);
                 userDto.setLive(stream.getLive());
+                userDto.setViewersCount(stream.getViewersCount());
                 result.add(userDto);
             }
             return ResponseEntity.ok(result);
@@ -156,10 +157,11 @@ public class FollowController {
                 userDto.setCreatedAt(user.getCreatedAt());
                 userDto.setUpdatedAt(user.getUpdatedAt());
                 Optional<Stream> optional = streams.stream()
-                        .filter(u -> u.getId().equals(id))
+                        .filter(s -> s.getUser().getId().equals(user.getId()))
                         .findFirst();
                 Stream stream = optional.orElse(null);
                 userDto.setLive(stream.getLive());
+                userDto.setViewersCount(stream.getViewersCount());
 
                 result.add(userDto);
             }

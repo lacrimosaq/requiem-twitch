@@ -19,11 +19,13 @@ interface StreamPlayerProps{
     user: any;
     stream: any;
     isFollowing: any;
+    typePlayer: string;
 }
 export const StreamPlayer = ({
     user, //host
     stream,
-    isFollowing
+    isFollowing,
+    typePlayer
 } : StreamPlayerProps) => {
     // const [isMaxHeight, setIsMaxHeight] = useState(false);
     // const divRef = useRef<HTMLDivElement>(null);
@@ -119,16 +121,18 @@ export const StreamPlayer = ({
                         isFollowing={isFollowing}
                         streamName={stream.name}
                     />
-                    <InfoCard
-                    viewerIdentity={identity}
-                    stream={stream}
-                    hostName={user.username}
-                    />
-                    <AboutCard
+                    {typePlayer === "edit" &&
+                        <InfoCard
+                        viewerIdentity={identity}
+                        stream={stream}
                         hostName={user.username}
-                        hostInfo={user.info}
-                        followersCount={user.followersCount}
-                    />
+                    />}
+                    {typePlayer === "watch" &&
+                        <AboutCard
+                            hostName={user.username}
+                            hostInfo={user.info}
+                            followersCount={user.followersCount}
+                    />}
 
                     <p className="text-transparent mt-20">qwe</p>
                 </div>

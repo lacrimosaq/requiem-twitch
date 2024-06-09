@@ -24,9 +24,9 @@ export const Video = ({
     ]).filter((track) => track.participant.identity === hostIdentity.toString());
 
     let content;
-    console.log("participant = " + participant);
-    console.log("tracks = " + tracks);
-    console.log("connectionState = " + connectionState);
+    // console.log("participant = " + participant);
+    // console.log("tracks = " + tracks);
+    // console.log("connectionState = " + connectionState);
     if(!participant && connectionState === ConnectionState.Connected){
         content = <OfflineVideo username={hostName}/>
     } else if(!participant || tracks.length === 0){

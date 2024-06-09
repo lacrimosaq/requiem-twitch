@@ -25,6 +25,7 @@ type Stream struct {
 	IngressID      sql.NullString `json:"ingress_id"`
 	IsFollowerChat types.BitBool  `json:"is_follower_chat"`
 	IsLive         types.BitBool  `json:"is_live"`
+	ViewersCount   int            `json:"viewers_count"`
 	Name           sql.NullString `json:"name"`
 	ServerURL      sql.NullString `json:"server_url"`
 	StreamKey      sql.NullString `json:"stream_key"`

@@ -8,7 +8,7 @@ import (
 )
 
 func StreamGetAll(db *sql.DB) ([]models.Stream, error) {
-	query := `SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at 
+	query := `SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, viewers_count, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at 
               FROM stream`
 	rows, err := db.Query(query)
 	if err != nil {
@@ -19,7 +19,7 @@ func StreamGetAll(db *sql.DB) ([]models.Stream, error) {
 	var streams []models.Stream
 	for rows.Next() {
 		var stream models.Stream
-		err := rows.Scan(&stream.ID, &stream.ChatDelay, &stream.IngressID, &stream.IsFollowerChat, &stream.IsLive, &stream.Name, &stream.ServerURL, &stream.StreamKey, &stream.Thumbnail, &stream.UserID, &stream.CreatedAt, &stream.UpdatedAt)
+		err := rows.Scan(&stream.ID, &stream.ChatDelay, &stream.IngressID, &stream.IsFollowerChat, &stream.IsLive, &stream.ViewersCount, &stream.Name, &stream.ServerURL, &stream.StreamKey, &stream.Thumbnail, &stream.UserID, &stream.CreatedAt, &stream.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -29,11 +29,11 @@ func StreamGetAll(db *sql.DB) ([]models.Stream, error) {
 }
 
 func StreamFindById(db *sql.DB, id int) (*models.Stream, error) {
-	query := "SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at FROM stream WHERE id = ?"
+	query := "SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, viewers_count, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at FROM stream WHERE id = ?"
 	row := db.QueryRow(query, id)
 
 	var stream models.Stream
-	err := row.Scan(&stream.ID, &stream.ChatDelay, &stream.IngressID, &stream.IsFollowerChat, &stream.IsLive, &stream.Name, &stream.ServerURL, &stream.StreamKey, &stream.Thumbnail, &stream.UserID, &stream.CreatedAt, &stream.UpdatedAt)
+	err := row.Scan(&stream.ID, &stream.ChatDelay, &stream.IngressID, &stream.IsFollowerChat, &stream.IsLive, &stream.ViewersCount, &stream.Name, &stream.ServerURL, &stream.StreamKey, &stream.Thumbnail, &stream.UserID, &stream.CreatedAt, &stream.UpdatedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -43,15 +43,15 @@ func StreamFindById(db *sql.DB, id int) (*models.Stream, error) {
 func StreamUpdate(db *sql.DB, stream *models.Stream) error {
 	query := `
         UPDATE stream
-        SET chat_delay = ?, ingress_id = ?, is_follower_chat = ?, is_live = ?, name = ?, server_url = ?, stream_key = ?, thumbnail = ?, user_id = ?, updated_at = NOW()
+        SET chat_delay = ?, ingress_id = ?, is_follower_chat = ?, is_live = ?, viewers_count = ?, name = ?, server_url = ?, stream_key = ?, thumbnail = ?, user_id = ?, updated_at = NOW()
         WHERE id = ?
     `
-	_, err := db.Exec(query, stream.ChatDelay, stream.IngressID, stream.IsFollowerChat, stream.IsLive, stream.Name, stream.ServerURL, stream.StreamKey, stream.Thumbnail, stream.UserID, stream.ID)
+	_, err := db.Exec(query, stream.ChatDelay, stream.IngressID, stream.IsFollowerChat, stream.IsLive, &stream.ViewersCount, stream.Name, stream.ServerURL, stream.StreamKey, stream.Thumbnail, stream.UserID, stream.ID)
 	return err
 }
 
 func StreamFindByUserId(db *sql.DB, userId int) ([]models.Stream, error) {
-	query := "SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at FROM stream WHERE user_id = ?"
+	query := "SELECT id, chat_delay, ingress_id, is_follower_chat, is_live, viewers_count, name, server_url, stream_key, thumbnail, user_id, created_at, updated_at FROM stream WHERE user_id = ?"
 	rows, err := db.Query(query, userId)
 	if err != nil {
 		return nil, err
@@ -61,7 +61,7 @@ func StreamFindByUserId(db *sql.DB, userId int) ([]models.Stream, error) {
 	var streams []models.Stream
 	for rows.Next() {
 		var stream models.Stream
-		err := rows.Scan(&stream.ID, &stream.ChatDelay, &stream.IngressID, &stream.IsFollowerChat, &stream.IsLive, &stream.Name, &stream.ServerURL, &stream.StreamKey, &stream.Thumbnail, &stream.UserID, &stream.CreatedAt, &stream.UpdatedAt)
+		err := rows.Scan(&stream.ID, &stream.ChatDelay, &stream.IngressID, &stream.IsFollowerChat, &stream.IsLive, &stream.ViewersCount, &stream.Name, &stream.ServerURL, &stream.StreamKey, &stream.Thumbnail, &stream.UserID, &stream.CreatedAt, &stream.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}

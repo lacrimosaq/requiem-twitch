@@ -228,6 +228,7 @@ func UpdateIngressesStatus() error {
 	var config = utils.LoadConfig()
 
 	client := lksdk.NewIngressClient(config.LiveKitAPIURL, config.LiveKitAPIKey, config.LiveKitAPISecret)
+	roomClient := lksdk.NewRoomServiceClient(config.LiveKitAPIURL, config.LiveKitAPIKey, config.LiveKitAPISecret)
 
 	// reset ingress
 
@@ -239,20 +240,38 @@ func UpdateIngressesStatus() error {
 	if ingresses != nil && ingresses.Items != nil {
 		for _, item := range ingresses.Items {
 			for _, stream := range streams {
-				if item.IngressId == stream.IngressID.String {
-
+				if item.IngressId == stream.IngressID.String { //important
 					if item.State.Status == livekit.IngressState_ENDPOINT_PUBLISHING {
-						if stream.IsLive == false {
-							stream.IsLive = true
-							fmt.Println("ChangeOnTrue")
+						participant, _ := roomClient.ListParticipants(context.Background(), &livekit.ListParticipantsRequest{
+							Room: item.RoomName,
+						})
+						if len(participant.Participants) != stream.ViewersCount || stream.IsLive == false {
+							if stream.IsLive == false {
+								stream.IsLive = true
+								fmt.Println("ChangeOnTrue")
+							}
+							if len(participant.Participants) != stream.ViewersCount {
+								stream.ViewersCount = len(participant.Participants)
+								fmt.Println("ChangeCount")
+							}
 							services.StreamUpdate(db, &stream)
 						}
 					} else if item.State.Status == livekit.IngressState_ENDPOINT_INACTIVE {
-						if stream.IsLive == true {
-							stream.IsLive = false
-							fmt.Println("ChangeOnFalse")
+						participant, _ := roomClient.ListParticipants(context.Background(), &livekit.ListParticipantsRequest{
+							Room: item.RoomName,
+						})
+						if len(participant.Participants) != stream.ViewersCount || stream.IsLive == true {
+							if stream.IsLive == true {
+								stream.IsLive = false
+								stream.ViewersCount = 0
+								fmt.Println("ChangeOnFalse")
+							} else if len(participant.Participants) != stream.ViewersCount {
+								stream.ViewersCount = len(participant.Participants)
+								fmt.Println("ChangeCount")
+							}
 							services.StreamUpdate(db, &stream)
 						}
+
 					}
 				}
 			}

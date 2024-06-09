@@ -44,10 +44,11 @@ public class UserController {
         userDto.setUpdatedAt(myUser.getUpdatedAt());
 
         Optional<Stream> optional = streams.stream()
-                .filter(u -> u.getId().equals(myUser.getId()))
+                .filter(s -> s.getUser().getId().equals(myUser.getId()))
                 .findFirst();
         Stream stream = optional.orElse(null);
         userDto.setLive(stream.getLive());
+        userDto.setViewersCount(stream.getViewersCount());
 
 
         List<Follow> allFollows = (List<Follow>) followService.getAll();
@@ -69,9 +70,15 @@ public class UserController {
         if (check) {
             MyUser myUser = myUserService.getById(id).get();
             List<MyUser> users = (List<MyUser>) myUserService.getAll();
+            List<Follow> allFollows = (List<Follow>) followService.getAll();
+
+            List<Follow> filteredFollows = allFollows.stream()
+                    .filter(f -> f.getOwner().getId().equals(myUser.getId()))
+                    .toList();
 
             List<MyUser> usersResult = users.stream()
-                    .filter(user -> !Objects.equals(user.getId(), myUser.getId()))
+                    .filter(user -> filteredFollows.stream()
+                    .anyMatch(follow -> !follow.getFollower().getId().equals(user.getId()) && !user.getId().equals(myUser.getId())))
                     .sorted((u1, u2) -> u2.getCreatedAt().compareTo(u1.getCreatedAt()))
                     .toList();
 
@@ -88,10 +95,11 @@ public class UserController {
                 userDto.setCreatedAt(user.getCreatedAt());
                 userDto.setUpdatedAt(user.getUpdatedAt());
                 Optional<Stream> optional = streams.stream()
-                        .filter(u -> u.getId().equals(id))
+                        .filter(s -> s.getUser().getId().equals(user.getId()))
                         .findFirst();
                 Stream stream = optional.orElse(null);
                 userDto.setLive(stream.getLive());
+                userDto.setViewersCount(stream.getViewersCount());
 
                 result.add(userDto);
             }

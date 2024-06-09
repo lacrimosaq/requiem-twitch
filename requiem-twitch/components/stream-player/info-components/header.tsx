@@ -53,7 +53,7 @@ export const Header = ({
                     Offline
                 </p>)}
             </div>
-            {viewerIdentity.includes("host") && 
+            {!viewerIdentity.includes("host") && 
             <div className="lg:ml-auto pt-3">
             <FollowButton
                 hostIdentity={hostIdentity}

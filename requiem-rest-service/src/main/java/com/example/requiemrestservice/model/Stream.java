@@ -23,6 +23,9 @@ public class Stream {
 
     private Boolean isLive;
 
+    @Column(nullable = false)
+    private Integer viewersCount = 0;
+
     private Boolean isFollowerChat;
 
     private Integer chatDelay;
@@ -51,18 +54,13 @@ public class Stream {
 
 
 
+    public Integer getViewersCount() {
+        return viewersCount;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
+    public void setViewersCount(Integer viewerCount) {
+        this.viewersCount = viewerCount;
+    }
 
     public Integer getId() {
         return id;

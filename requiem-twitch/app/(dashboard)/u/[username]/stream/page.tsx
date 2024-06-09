@@ -90,6 +90,7 @@ const StreamPage = ({
                 user={profile}
                 stream={stream}
                 isFollowing={true} //can be here only as host
+                typePlayer={"edit"}
             />
         </div>
     );

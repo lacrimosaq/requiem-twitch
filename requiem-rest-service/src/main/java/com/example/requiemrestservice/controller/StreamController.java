@@ -1,5 +1,6 @@
 package com.example.requiemrestservice.controller;
 
+import com.example.requiemrestservice.model.Follow;
 import com.example.requiemrestservice.model.MyUser;
 import com.example.requiemrestservice.model.Stream;
 import com.example.requiemrestservice.service.MyUserService;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -65,4 +68,32 @@ public class StreamController {
 
     }
 
+    @GetMapping(path="/recommended/{id}")
+    public @ResponseBody ResponseEntity<?> getRecommended(@PathVariable Integer id){
+        boolean check = myUserService.getById(id).isPresent();
+        if (check) { //equal with for non-auth user BY NOW
+            MyUser myUser = myUserService.getById(id).get();
+            List<Stream> allStreams = (List<Stream>) streamService.getAll();
+
+            List<Stream> filteredStreams = allStreams.stream()
+//                    .filter(s -> s.getLive().equals(true))
+                    .sorted(Comparator.comparingInt(Stream::getViewersCount).reversed())
+                    .limit(10)
+                    .toList();
+            for(Stream stream : filteredStreams){
+                stream.setThumbnail(Base64Helper.fileToBase64(stream.getThumbnail()));
+            }
+            return ResponseEntity.ok(filteredStreams);
+        }
+        else{
+            List<Stream> allStreams = (List<Stream>) streamService.getAll();
+
+            List<Stream> filteredStreams = allStreams.stream()
+//                    .filter(s -> s.getLive().equals(true))
+                    .sorted(Comparator.comparingInt(Stream::getViewersCount).reversed())
+                    .limit(10)
+                    .toList();
+            return ResponseEntity.ok(filteredStreams);
+        }
+    }
 }
