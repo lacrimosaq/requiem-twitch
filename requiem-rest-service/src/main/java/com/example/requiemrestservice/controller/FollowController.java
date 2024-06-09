@@ -114,12 +114,12 @@ public class FollowController {
                 userDto.setRole(user.getRole());
                 userDto.setCreatedAt(user.getCreatedAt());
                 userDto.setUpdatedAt(user.getUpdatedAt());
+
                 Optional<Stream> optional = streams.stream()
                         .filter(u -> u.getId().equals(id))
                         .findFirst();
                 Stream stream = optional.orElse(null);
                 userDto.setLive(stream.getLive());
-
                 result.add(userDto);
             }
             return ResponseEntity.ok(result);

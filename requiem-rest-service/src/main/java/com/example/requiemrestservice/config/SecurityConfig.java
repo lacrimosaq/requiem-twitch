@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/*").permitAll()
                         .requestMatchers("/user/recommended/*").permitAll()
                         .requestMatchers("/user/profile/*").permitAll()
+                        .requestMatchers("/stream/user/*").permitAll()
                         .anyRequest().authenticated()
 
                 )

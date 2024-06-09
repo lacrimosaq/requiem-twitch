@@ -13,7 +13,7 @@ const StreamPage = ({
     params,
 } : StreamPageProps) => {
     const [profile, setProfile] = useState({id : undefined, username : ""});
-    const [stream, setStream] = useState<any>({serverUrl: undefined, streamKey: undefined});
+    const [stream, setStream] = useState<any>({name: "", thumbnail: null, serverUrl: undefined, streamKey: undefined});
     const [isFollow, setIsFollow] = useState(false);
     useEffect(() => {
         LoadHost(); //LoadStream inside

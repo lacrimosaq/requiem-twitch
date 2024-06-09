@@ -10,6 +10,10 @@ import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { cn } from "@/utils/cn";
 import { Chat, ChatSkeleton } from "./chat-components/chat";
 import { ChatToggle } from "./chat-components/chat-toggle";
+import { Header } from "./info-components/header";
+import { InfoCard } from "./info-components/info-card";
+import { ScrollArea } from "../ui/scroll-area";
+import { AboutCard } from "./info-components/about-card";
 
 interface StreamPlayerProps{
     user: any;
@@ -21,31 +25,31 @@ export const StreamPlayer = ({
     stream,
     isFollowing
 } : StreamPlayerProps) => {
-    const [isMaxHeight, setIsMaxHeight] = useState(false);
-    const divRef = useRef<HTMLDivElement>(null);
-    let maxHeight = 0; // 75vh in pixels
+    // const [isMaxHeight, setIsMaxHeight] = useState(false);
+    // const divRef = useRef<HTMLDivElement>(null);
+    // let maxHeight = 0; // 75vh in pixels
   
-    const checkHeight = () => {
-      if (divRef.current && divRef.current.clientHeight) {
-        const currentHeight = divRef.current.clientHeight;
-        setIsMaxHeight(currentHeight >= maxHeight );
-        console.log("isMaxHeight = " + isMaxHeight);
-        console.log("currentHeight = " + currentHeight);
-        console.log("maxHeight = " + maxHeight);
-      }
-    };
+    // const checkHeight = () => {
+    //   if (divRef.current && divRef.current.clientHeight) {
+    //     const currentHeight = divRef.current.clientHeight;
+    //     setIsMaxHeight(currentHeight >= maxHeight );
+    //     console.log("isMaxHeight = " + isMaxHeight);
+    //     console.log("currentHeight = " + currentHeight);
+    //     console.log("maxHeight = " + maxHeight);
+    //   }
+    // };
   
-    useEffect(() => {
-        maxHeight = (0.75 * window.innerHeight) - 0.5;
-      window.addEventListener('resize', checkHeight);
-      window.addEventListener('scroll', checkHeight);
-      checkHeight(); // Initial check
+    // useEffect(() => {
+    //     maxHeight = (0.75 * window.innerHeight) - 0.5;
+    //   window.addEventListener('resize', checkHeight);
+    //   window.addEventListener('scroll', checkHeight);
+    //   checkHeight(); // Initial check
   
-      return () => {
-        window.removeEventListener('resize', checkHeight);
-        window.removeEventListener('scroll', checkHeight);
-      };
-    }, []);
+    //   return () => {
+    //     window.removeEventListener('resize', checkHeight);
+    //     window.removeEventListener('scroll', checkHeight);
+    //   };
+    // }, []);
 
     const {
         token,
@@ -97,20 +101,36 @@ export const StreamPlayer = ({
             <LiveKitRoom
             token={token}
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
-            className={cn("flex flex-col lg:flex-row h-screen", 
-                // collapsed && "lg:grid-cols-2"
+            className={cn("flex  h-screen overflow-hidden", 
+                // collapsed && "lg:grid-cols-2" flex-col lg:flex-row
             )}
             >
-                 <div 
-                    className={cn("flex-1 relative bg-transparent lg:w-auto max-h-[75vh] ",
-                        isMaxHeight && "bg-black border-b"
-                    )}> {/*lg:overflow-y-auto */}
-                    <div
-                    ref={divRef} >
+                 <div className={cn("flex-1 relative bg-transparent lg:w-auto h-full overflow-y-scroll noscroll", )}> {/*lg:overflow-y-auto */}
+                    <div className={cn("relative bg-black border-b lg:w-auto max-h-[75vh] ", )}>
                     <Video
                         hostIdentity={user.id}
                         hostName={user.username}
                     /></div>
+                    <Header
+                        hostName={user.username}
+                        hostIdentity={user.id}
+                        viewerIdentity={identity}
+                        avatar={user.avatar}
+                        isFollowing={isFollowing}
+                        streamName={stream.name}
+                    />
+                    <InfoCard
+                    viewerIdentity={identity}
+                    stream={stream}
+                    hostName={user.username}
+                    />
+                    <AboutCard
+                        hostName={user.username}
+                        hostInfo={user.info}
+                        followersCount={user.followersCount}
+                    />
+
+                    <p className="text-transparent mt-20">qwe</p>
                 </div>
                 <div className={cn("w-full lg:w-[340px] bg-gray-400 ", collapsed && "hidden")}>
                     <Chat

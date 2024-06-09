@@ -25,12 +25,38 @@ public class UserController {
     private MyUserService myUserService;
     @Autowired
     private StreamService streamService;
+    @Autowired
+    private FollowService followService;
 
     @GetMapping(path="/profile/{username}")
     public @ResponseBody ResponseEntity<?> getProfile(@PathVariable String username) {
         MyUser myUser = myUserService.getByUsername(username);
+        List<Stream> streams = (List<Stream>) streamService.getAll();
+
+        UserDto userDto = new UserDto();
+        userDto.setId(myUser.getId());
+        userDto.setUsername(myUser.getUsername());
+        userDto.setEmail(myUser.getEmail());
+        userDto.setAvatar(myUser.getAvatar());
+        userDto.setInfo(myUser.getInfo());
+        userDto.setRole(myUser.getRole());
+        userDto.setCreatedAt(myUser.getCreatedAt());
+        userDto.setUpdatedAt(myUser.getUpdatedAt());
+
+        Optional<Stream> optional = streams.stream()
+                .filter(u -> u.getId().equals(myUser.getId()))
+                .findFirst();
+        Stream stream = optional.orElse(null);
+        userDto.setLive(stream.getLive());
+
+
+        List<Follow> allFollows = (List<Follow>) followService.getAll();
+        List<Follow> filteredFollows = allFollows.stream()
+                .filter(f -> f.getOwner().getId().equals(myUser.getId()))
+                .toList();
+        userDto.setFollowersCount(filteredFollows.size());
         if (myUser != null) {
-            return ResponseEntity.ok(myUser);
+            return ResponseEntity.ok(userDto);
 
         }
         return ResponseEntity.badRequest().body("Not such a user!");

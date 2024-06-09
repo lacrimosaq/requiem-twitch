@@ -4,6 +4,7 @@ import com.example.requiemrestservice.model.MyUser;
 import com.example.requiemrestservice.model.Stream;
 import com.example.requiemrestservice.service.MyUserService;
 import com.example.requiemrestservice.service.StreamService;
+import com.example.requiemrestservice.utils.Base64Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class StreamController {
         MyUser myUser = myUserService.getById(id).isPresent() ? myUserService.getById(id).get() : null;
         if (myUser != null) {
             Stream stream= streamService.getByUserId(myUser.getId());
+            stream.setThumbnail(Base64Helper.fileToBase64(stream.getThumbnail()));
             return ResponseEntity.ok(stream);
         }
         return ResponseEntity.badRequest().body("Not such a user!");
@@ -38,14 +40,16 @@ public class StreamController {
             boolean nameNotEqual = !Objects.equals(myStream.getName(), model.getName()) && model.getName() != null;
             boolean followerChatNotEqual = !Objects.equals(myStream.getFollowerChat(), model.getFollowerChat()) && model.getFollowerChat() != null;
             boolean chatDelayNotEqual = !Objects.equals(myStream.getChatDelay(), model.getChatDelay()) && model.getChatDelay() != null;
+            boolean thumbnailNotEqual = !Objects.equals(Base64Helper.fileToBase64(myStream.getThumbnail()), model.getThumbnail());
 
-            if (!nameNotEqual && !followerChatNotEqual && !chatDelayNotEqual) {
+            if (!nameNotEqual && !followerChatNotEqual && !chatDelayNotEqual && !thumbnailNotEqual) {
                 return ResponseEntity.badRequest().body("There are nothing to update");
             }
 
             if (nameNotEqual)         myStream.setName(model.getName());
             if (followerChatNotEqual) myStream.setFollowerChat(model.getFollowerChat());
             if (chatDelayNotEqual)    myStream.setChatDelay(model.getChatDelay());
+            if (thumbnailNotEqual)    myStream.setThumbnail(Base64Helper.base64ToFile("thumbnail",model.getThumbnail()));
 
             try {
                 streamService.updateById(myStream.getId(), myStream);

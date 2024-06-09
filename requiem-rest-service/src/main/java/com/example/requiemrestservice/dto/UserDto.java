@@ -28,11 +28,20 @@ public class UserDto {
 
     private Boolean isLive;
 
+    private Integer followersCount;
 
 
 
 
 
+
+    public Integer getFollowersCount() {
+        return followersCount;
+    }
+
+    public void setFollowersCount(Integer followersCount) {
+        this.followersCount = followersCount;
+    }
 
     public Integer getId() {
         return id;
