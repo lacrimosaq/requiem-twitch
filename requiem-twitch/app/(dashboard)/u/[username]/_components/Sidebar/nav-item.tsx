@@ -28,12 +28,11 @@ export const NavItem= ({
         <div className="px-1">
         <button className={cn("flex w-full h-12 mb-2 items-center rounded",
             collapsed ? "justify-center" : "justify-start",
-            isActive ? "bg-red-600" : "hover:bg-slate-400"
+            isActive ? "bg-red-600" : "hover:bg-slate-800"
         )}>
-            <Link href={href} className={!collapsed ? "w-full" : ""}>
-                <div className="flex items-center gap-x-4 py-3">
-                    <Icon color="white" className={cn(
-                        "h-5 w-5",
+            <Link href={href} className={"w-full"}>
+                <div className={cn("flex py-3", collapsed && "items-center justify-center" )}>
+                    <Icon color="white" className={cn("h-5 w-5",
                         collapsed ? "mr-0" : "ms-4 mr-2"
                     )} />
                     {!collapsed &&

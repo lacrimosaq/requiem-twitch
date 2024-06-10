@@ -1,26 +1,27 @@
-import { Thumbnail } from "@/components/thumbnail";
-import { Avatar } from "flowbite-react";
-import { UserIcon } from "lucide-react";
+"use client";
+import { useEffect, useState } from "react";
+import { FollowButton } from "@/components/stream-player/info-components/follow-button";
+import Image from "next/image";
 import Link from "next/link";
+import { Thumbnail } from "@/components/thumbnail";
 
-interface StreamCardProps {
-    data: any;
+interface ResultStreamCardProps{
+    data: any,
 }
 
-export const StreamCard = ({
-    data,
-}: StreamCardProps) => {
-    return (
+export const ResultStreamCard = ({
+    data
+}: ResultStreamCardProps) => {
+    return(
         <Link href={`/${data.user.username}`}>
-        <div className="h-full w-full px-2">
+        <div className="flex text-white my-3 w-full h-[120px]">
             <Thumbnail
                 src={data.thumbnail}
                 fallback={data.user.avatar}
                 isLive={data.isLive}
                 viewersCount={data.viewersCount}
             />
-            <div className="flex items-start">
-                <Avatar alt="User avatar" img={"data:image/jpeg;base64,"+data.user.avatar} className={" w-10 my-2 mx-1"} rounded />  
+            <div className="flex items-start ms-2">
                 <div className="flex flex-col text-sm overflow-hidden text-white my-2 mx-1">
                     <p className="font-semibold hover:text-red-600">
                         {data.name}

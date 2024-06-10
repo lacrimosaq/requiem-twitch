@@ -10,7 +10,7 @@ export const KeyCard = ({
 }: KeyCardProps) => {
     const [show, setShow] = useState(false); 
     return(
-        <div className="rounded-xl bg-slate-600 p-6 mb-3">
+        <div className="rounded-xl bg-gray-800 text-neutral-100  p-6 mb-3">
             <div className="flex items-start">
                 <p className="font-semibold shrink-0 pt-2">
                     Stream Key
@@ -18,7 +18,7 @@ export const KeyCard = ({
                 <div className="w-full">
                     <div className="w-full flex items-center gap-x-2">
                         <input 
-                        className="bg-slate-800  mx-4 mb-3 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
+                        className="bg-gray-800 border-neutral-500 border mx-4 mb-3 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
                         value={value || ""}
                         type={show ? "text" : "password"}
                         disabled

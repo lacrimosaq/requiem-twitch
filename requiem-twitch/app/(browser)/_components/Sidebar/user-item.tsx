@@ -20,9 +20,9 @@ export const UserItem = ({
     const { collapsed } = useSidebar((state) => state);
 
     return (
-        <button onClick={() => {router.push(`/${username}`);}} className={"flex px-2 w-full h-12 hover:bg-slate-600 items-center" 
+        <button onClick={() => {router.push(`/${username}`);}} className={"flex px-2 w-full h-12 hover:bg-slate-900 items-center" 
         + (collapsed ? " justify-center" : " justify-start") }>
-            <Avatar alt="User avatar" img={avatar} className={(isLive ? "grayscale-0 " : "grayscale ") + " w-10 "} rounded />
+            <Avatar alt="User avatar" img={"data:image/jpeg;base64,"+avatar} className={(isLive ? "grayscale-0 " : "grayscale ") + " w-10 "} rounded />
             {!collapsed && (
                 <div className=" text-start">
                 <p className="font-semibold text-white ms-3 text-sm">{username}</p>

@@ -7,6 +7,7 @@ import com.example.requiemrestservice.model.Stream;
 import com.example.requiemrestservice.service.FollowService;
 import com.example.requiemrestservice.service.MyUserService;
 import com.example.requiemrestservice.service.StreamService;
+import com.example.requiemrestservice.utils.Base64Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -109,7 +110,7 @@ public class FollowController {
                 userDto.setId(user.getId());
                 userDto.setUsername(user.getUsername());
                 userDto.setEmail(user.getEmail());
-                userDto.setAvatar(user.getAvatar());
+                userDto.setAvatar(Base64Helper.fileToBase64(user.getAvatar()));
                 userDto.setInfo(user.getInfo());
                 userDto.setRole(user.getRole());
                 userDto.setCreatedAt(user.getCreatedAt());
@@ -151,7 +152,7 @@ public class FollowController {
                 userDto.setId(user.getId());
                 userDto.setUsername(user.getUsername());
                 userDto.setEmail(user.getEmail());
-                userDto.setAvatar(user.getAvatar());
+                userDto.setAvatar(Base64Helper.fileToBase64(user.getAvatar()));
                 userDto.setInfo(user.getInfo());
                 userDto.setRole(user.getRole());
                 userDto.setCreatedAt(user.getCreatedAt());

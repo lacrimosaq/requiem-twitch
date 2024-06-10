@@ -36,7 +36,7 @@ export const Video = ({
     }
 
     return(
-        <div className="aspect-video border-b group text-white bg-black relative max-h-[75vh] mx-auto">
+        <div className="aspect-video border-b group text-white border-[#2d2E35] bg-black relative max-h-[75vh] mx-auto">
             {content}
         </div>
     );
@@ -44,7 +44,7 @@ export const Video = ({
 
 export const VideoSkeleton = () => {
     return(
-        <div className="aspect-video border-x border-background">
+        <div className="aspect-video border-x border-[#2d2E35] border-background">
             <Skeleton className="h-full w-full rounded-none"/>
         </div>
     );

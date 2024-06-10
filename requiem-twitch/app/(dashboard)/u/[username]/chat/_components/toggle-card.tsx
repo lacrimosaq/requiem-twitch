@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { initFlowbite } from "flowbite";
 import { cn } from "@/utils/cn";
+import { PencilLine } from "lucide-react";
 
 type FieldType = "chatDelay"|"followerChat";
 
@@ -73,8 +74,8 @@ export const ToggleCard = ({
 
     }
     return(
-        <div className="rounded-xl bg-slate-600 p-6  mb-3">
-            <div className="flex items-center justify-between">
+        <div className="rounded-xl bg-gray-800 border-neutral-600  border p-6  mb-3">
+            <div className="flex items-center justify-between text-neutral-100 ">
                 <p className="font-semibold shrink-0">
                     {label}
                 </p>
@@ -82,38 +83,39 @@ export const ToggleCard = ({
                 <div className="space-y-2">
                     
                     <label className="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" onChange={handleBoolean}  className="sr-only peer" checked={valueBool} disabled={isLoading}/>
-                    <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    <input type="checkbox" onChange={handleBoolean}  className="sr-only peer " checked={valueBool} disabled={isLoading}/>
+                    <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
                     </label>
                 </div>}
                 {valueNumber !== undefined &&
                 <div className="space-y-2">
                     
-                    <div className="relative flex items-center max-w-[8rem]">
+                    <div className="relative flex items-center max-w-[7rem] rounded">
                         
                         <input 
-                        type="number" 
-                        id="quantity-input" 
-                        // data-input-counter data-input-counter-min="1" 
-                        // data-input-counter-max="50" 
-                        aria-describedby="helper-text-explanation" 
-                        className="bg-gray-50 border-x-0 border-gray-300 h-10 text-center text-gray-900 text-sm focus:ring-blue-500 rounded-s focus:border-blue-500 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            type="number" 
+                            id="quantity-input" 
+                            // data-input-counter data-input-counter-min="1" 
+                            // data-input-counter-max="50" 
+                            aria-describedby="helper-text-explanation" 
+                            className="bg-slate-900 border-2 border-gray-600 h-10 text-center text-neutral-100 text-sm focus:outline-none focus:ring-red-500 rounded-s focus:border-red-500 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 
-                         
-                        placeholder="ms" 
-                        value={valueInt}
-                        onChange={(e) => changeNumber(e.target.value)}
-                        disabled={isLoading}
-                        required />
+                            
+                            placeholder="ms" 
+                            value={valueInt}
+                            onChange={(e) => changeNumber(e.target.value)}
+                            disabled={isLoading}
+                            required 
+                        />
                         <button 
                             type="button" 
                             onClick={handleNumber} 
-                            className={cn("block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-e",
-                                isLoading === true ? "bg-blue-700" : "bg-blue-500"
+                            className={cn("block bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-2 rounded-e",
+                                isLoading === true ? "bg-red-700" : "bg-red-600"
                             )}
                             disabled={isLoading}
                         >
-                            Save
+                            <PencilLine />
                         </button> 
                     </div>
                 </div>}

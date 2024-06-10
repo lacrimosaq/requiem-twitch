@@ -32,7 +32,7 @@ export const Header = ({
 
     return(
         <div className="flex flex-col lg:flex-row items-start  px-4">
-            <Avatar alt="User avatar" img={avatar} size="lg" className="py-3 mr-1" rounded bordered color="red"/>
+            <Avatar alt="User avatar" img={"data:image/jpeg;base64," + avatar} size="lg" className="py-3 mr-1" rounded bordered color="red"/>
             <div className="space-y-1">
                 <div className="flex items-center pt-3">
                     <h2 className="text-lg text-white font-semibold mr-1">

@@ -4,6 +4,7 @@ import com.example.requiemrestservice.model.MyUser;
 import com.example.requiemrestservice.model.Stream;
 import com.example.requiemrestservice.service.MyUserService;
 import com.example.requiemrestservice.service.StreamService;
+import com.example.requiemrestservice.utils.Base64Helper;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/auth")
@@ -66,12 +68,14 @@ public class AuthController {
         MyUser checkEmail = myUserService.getByEmail(model.getEmail());
         if(checkUsername == null && checkEmail == null)
         {
+            Random rand = new Random();
             var BCryptEncoder = new BCryptPasswordEncoder();
             MyUser user = new MyUser();
             user.setUsername(model.getUsername());
             user.setEmail(model.getEmail());
             user.setPassword(BCryptEncoder.encode(model.getPassword()));
             user.setRole("client");
+            user.setAvatar("src\\main\\resources\\static\\storage\\avatars\\default_avatar_" + (rand.nextInt(5) + 1) + ".jpg");
 
             try {
                 myUserService.save(user);
@@ -107,6 +111,7 @@ public class AuthController {
                 );
 
                 MyUser user = myUserService.getByUsername(model.getUsername());
+                user.setAvatar(Base64Helper.fileToBase64(user.getAvatar()));
                 String jwtToken = createJwtToken(user);
                 var response = new HashMap<String, Object>();
                 response.put("token", jwtToken);

@@ -245,6 +245,9 @@ func UpdateIngressesStatus() error {
 						participant, _ := roomClient.ListParticipants(context.Background(), &livekit.ListParticipantsRequest{
 							Room: item.RoomName,
 						})
+						if participant == nil {
+							continue
+						}
 						if len(participant.Participants) != stream.ViewersCount || stream.IsLive == false {
 							if stream.IsLive == false {
 								stream.IsLive = true
@@ -260,6 +263,9 @@ func UpdateIngressesStatus() error {
 						participant, _ := roomClient.ListParticipants(context.Background(), &livekit.ListParticipantsRequest{
 							Room: item.RoomName,
 						})
+						if participant == nil {
+							continue
+						}
 						if len(participant.Participants) != stream.ViewersCount || stream.IsLive == true {
 							if stream.IsLive == true {
 								stream.IsLive = false

@@ -20,7 +20,7 @@ export const InfoCard = ({
 
     return(
         <div className="my-6 px-14">
-            <div className="rounded-xl bg-slate-600">
+            <div className="rounded-xl bg-slate-950 border-[#2d2E35] border">
                 <div className="flex items-center p-4">
                     <div className="rounded-md bg-blue-600 mr-2 p-2 h-auto w-auto">
                         <Pencil className="text-white h-5 w-5"/>
@@ -38,7 +38,7 @@ export const InfoCard = ({
                         stream={stream}
                     /></div>
                 </div>
-                <hr/>
+                <hr className=" border-[#2d2E35]"/>
                 <div className="p-4 lg:p-6">
                     <div>
                         <h3 className="text-sm text-white mb-1">

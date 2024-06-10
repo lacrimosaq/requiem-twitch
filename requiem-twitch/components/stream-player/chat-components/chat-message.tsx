@@ -17,7 +17,7 @@ export const ChatMessage = ({
     console.log(hostName === data.from?.name);
 
     return(
-        <div className="flex p-2 rounded-md hover:bg-slate-500">
+        <div className="flex p-2 rounded-md hover:bg-slate-900">
             <div className="flex flex-wrap items-baseline grow">
             {hostName === data.from?.name  && (<>
             <button  data-tooltip-target="tooltip-up-chat-role" data-tooltip-placement="top" className="block p-1 mr-1 rounded bg-blue-500 text-white " >

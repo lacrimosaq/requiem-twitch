@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Base64Helper {
     public static String base64ToFile(String folder, String base64String) {
         if(base64String == null) return null;
-        String folderPath = "src/main/resources/static/storage"+ File.separator +  folder;
+        String folderPath = "src\\main\\resources\\static\\storage"+ File.separator +  folder;
         File directory = new File(folderPath);
         if (!directory.exists()) {
             directory.mkdir();

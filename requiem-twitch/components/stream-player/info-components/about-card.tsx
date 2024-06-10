@@ -20,7 +20,7 @@ export const AboutCard = ({
                 About {hostName}
                 <div className="mx-2"><VerifiedMark /></div>
             </div>
-            <div className="group rounded-md bg-slate-600 p-0 lg:p-5 flex flex-col">
+            <div className="group rounded-md bg-slate-900 p-3 mt-2 lg:p-5 flex flex-col ">
                 {/* <div className=" items-center justify-between">
                 </div> */}
                 <div className="text-sm text-white mb-2">

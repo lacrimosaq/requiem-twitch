@@ -36,7 +36,7 @@ export const StreamsFeed = () => {
     return(
     (!isLoading && <div>
         <h2 className="text-lg text-white font-semibold mb-4">
-        Live channels we think you&apos;ll like{recommended.length}
+        Live channels we think you&apos;ll like
         </h2>
         {recommended.length === 0 && (
             <div className='text-whtie text-s,'>No stream found.</div>

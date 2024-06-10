@@ -103,12 +103,12 @@ export const StreamPlayer = ({
             <LiveKitRoom
             token={token}
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
-            className={cn("flex  h-screen overflow-hidden", 
+            className={cn("flex  h-screen overflow-hidden flex-col lg:flex-row overflow-y-scroll lg:overflow-y-scroll noscroll", 
                 // collapsed && "lg:grid-cols-2" flex-col lg:flex-row
             )}
             >
-                 <div className={cn("flex-1 relative bg-transparent lg:w-auto h-full overflow-y-scroll noscroll", )}> {/*lg:overflow-y-auto */}
-                    <div className={cn("relative bg-black border-b lg:w-auto max-h-[75vh] ", )}>
+                 <div className={cn("flex-1 relative bg-transparent lg:w-auto w-full h-full lg:overflow-y-scroll noscroll", )}> {/*lg:overflow-y-auto */}
+                    <div className={cn("relative bg-black border-b border-[#2d2E35] lg:w-auto w-full max-h-[75vh] ", )}>
                     <Video
                         hostIdentity={user.id}
                         hostName={user.username}
@@ -134,7 +134,7 @@ export const StreamPlayer = ({
                             followersCount={user.followersCount}
                     />}
 
-                    <p className="text-transparent mt-20">qwe</p>
+                    <p className="text-transparent mt-20">kludge</p>
                 </div>
                 <div className={cn("w-full lg:w-[340px] bg-gray-400 ", collapsed && "hidden")}>
                     <Chat
@@ -142,11 +142,13 @@ export const StreamPlayer = ({
                         hostName={user.username}
                         hostIdentity={user.id}
                         isFollowing={isFollowing}
-                        chatDelay={stream.chatDelay}
-                        isChatFollowersOnly={stream.followerChat}
+                        stream={stream}
                     />
+                    <p className="text-transparent mt-10 lg:hidden">kludge</p>
                 </div>
             </LiveKitRoom>
+
+
         </>
     )
 };

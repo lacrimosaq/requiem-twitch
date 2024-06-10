@@ -52,7 +52,7 @@ const ChatdPage = () => {
         <div className="p-6">
             
             <div className="mb-4">
-                <h1 className="text-2xl font-bold">
+                <h1 className="text-2xl text-neutral-100 font-bold">
                     Chat Settings
                 </h1>
             </div>

@@ -14,8 +14,7 @@ interface ChatProps{
     hostIdentity: number;
     viewerName: string;
     isFollowing: boolean;
-    chatDelay: number;
-    isChatFollowersOnly: boolean;
+    stream: any;
 }
 
 export const Chat = ({
@@ -23,8 +22,7 @@ export const Chat = ({
     hostIdentity,
     viewerName,
     isFollowing,
-    chatDelay,
-    isChatFollowersOnly
+    stream
 }: ChatProps) => {
     const [value, setValue] = useState("");
     const {variant, onExpand} = useChatSidebar((state) => state);
@@ -52,7 +50,7 @@ export const Chat = ({
     }
 
     return(
-        <div className="flex flex-col bg-slate-700 border-l border-b pt-0 h-[calc(100vh-80px)]">
+        <div className="flex flex-col bg-slate-950 border-l border-[#2d2E35] border-b pt-0 h-[calc(100vh-80px)]">
             <ChatHeader/>
             {variant === ChatVariant.CHAT ? (
                 <>
@@ -64,8 +62,7 @@ export const Chat = ({
                         onSubmit={onSubmit}
                         value={value}
                         onChange={setValue}
-                        isChatFollowersOnly={isChatFollowersOnly}
-                        chatDelay={chatDelay}
+                        stream={stream}
                         isFollowing={isFollowing}
                         isHost={hostName === viewerName}
                     />

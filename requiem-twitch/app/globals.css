@@ -4,7 +4,7 @@
 
   @layer base {
     :root {
-      --background: 222.2 84% 4.9%; /*tmp*/
+      --background: 222.2 84% 4%; /*tmp*/
       --foreground: 222.2 84% 4.9%;
 
       --card: 0 0% 100%;
@@ -86,4 +86,11 @@
 .noscroll {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+.noscroll {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.text-white-opacity-100 {
+  color: rgba(255, 255, 255, 1);
 }

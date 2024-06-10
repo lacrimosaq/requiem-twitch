@@ -25,9 +25,10 @@ const UserPage = ({
         const loadData  = async () => {
             LoadProfile()
             .then(profileId => {
+                LoadStream(profileId);
                 if (localStorage.getItem("jwtToken") !== null && profileId) {
-                    return LoadIsFollow(profileId)
-                        .then(() => LoadStream(profileId));
+                    if(localStorage.getItem("username") === params.username) setIsFollow(true)
+                    else return LoadIsFollow(profileId)
                 }
             })
             .catch(err => {
@@ -88,7 +89,7 @@ const UserPage = ({
             console.log("Finally LoadIsFollow");
             
         });
-    }
+    };
     const LoadStream = async (id) => {
         let status = 0;
         await fetch("http://localhost:8080/stream/user/" + id, {
@@ -106,7 +107,7 @@ const UserPage = ({
             // setIsLoading(false);
             
         });
-    }
+    };
 
 
     return(

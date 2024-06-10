@@ -11,7 +11,7 @@ export const DashboardNavbar = () => {
         setJwtToken(localStorage.getItem("jwtToken"));
     }, [jwtToken]);
     return (
-        <nav className="top-0 w-full h-20 bg-gray-800 px-2 lg:px-4 flex justify-between items-center">
+        <nav className="top-0 w-full h-20 border-b border-slate-950 bg-slate-900 px-2 lg:px-4 flex justify-between items-center">
             <Logo/>
             <AvatarMenu setJwtToken={setJwtToken}/>
         </nav>

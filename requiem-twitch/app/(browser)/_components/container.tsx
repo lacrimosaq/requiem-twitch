@@ -1,5 +1,6 @@
 "use client"
 
+import { cn } from "@/lib/utils";
 import { useSidebar } from "@/store/use-sidebar";
 import { useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -30,8 +31,8 @@ export const Container = ({
 
     return(
         <div className={
-        "flex-1 lg:ml-[256px] ml-[60px]"
-        + (collapsed ? " ml-[60px]" : " lg:ml-[256px] ml-[60px]")
+        cn("flex-1 lg:ml-[256px] ml-[60px]"
+        + (collapsed ? " lg:ml-[60px]" : " lg:ml-[256px] ml-[60px]"))
         }>
             {children}
         </div>

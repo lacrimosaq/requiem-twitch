@@ -36,8 +36,8 @@ export const Toggle = () => {
             )}
             {!collapsed && (
                 <div className="p-3 pl-2 mb-2 hidden lg:flex items-center w-full">
-                    <p className="font-semibold text-white">
-                        For you
+                    <p className="font-semibold text-white text-xl">
+                        For You
                     </p>
                     <button data-tooltip-target="tooltip-right" data-tooltip-placement="right" type="button"  
                         className="h-auto p-2 ml-auto hover:bg-slate-500 rounded" 
@@ -59,8 +59,8 @@ export const Toggle = () => {
 export const ToggleSkeleton = () => {
     return(
         <div className="lg:hidden p-3 pl-2 mb-2 flex items-center w-full">
-            <p className="font-semibold text-white">
-                For you
+            <p className="font-semibold text-white text-xl">
+                For You
             </p>
             <button data-tooltip-target="tooltip-right" data-tooltip-placement="right" type="button"  
                 className="h-auto p-2 ml-auto hover:bg-slate-500 rounded" 

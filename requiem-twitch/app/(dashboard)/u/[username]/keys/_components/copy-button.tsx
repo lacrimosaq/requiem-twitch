@@ -28,7 +28,7 @@ export const CopyButton = ({
         disabled={!value || isCopied}
 
         >
-            {isCopied ? <CheckCheck/> : <Copy size={"20px"}/>}
+            {isCopied ? <CheckCheck className="text-neutral-100"/> : <Copy className="text-neutral-100" size={"20px"}/>}
         </button>
     );
 }

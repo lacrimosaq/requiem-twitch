@@ -91,18 +91,18 @@ export const InfoModal = ({
         <div className="dark">
             <button
                 onClick={toggleModal}
-                className="block ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="block ml-auto text-white hover:underline bg-transparent  focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 type="button"
             >
                 Edit
             </button>
 
             {isModalOpen && (
-                <div id="popup-modal" tabIndex={-1} className="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+                <div id="popup-modal" tabIndex={-1} className="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50 ">
                     <div className="relative p-4 w-full max-w-md max-h-full">
-                        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <div className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-700 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                <div className="bg-white dark:bg-gray-700 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 ">
+                            <div className="relative transform overflow-hidden rounded-lg bg-white border-neutral-800 border dark:bg-gray-700 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <div className="bg-white dark:bg-slate-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4 ">
                                 <button
                                     onClick={toggleModal}
                                     type="button"
@@ -117,7 +117,7 @@ export const InfoModal = ({
                                 
                                 <div className="sm:flex sm:items-start">
                                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                        <h1 className="text-base font-semibold leading-6 text-lg  text-white" id="modal-title">Edit stream info</h1>
+                                        <h1 className="text-base font-semibold leading-6 text-xl  text-white" id="modal-title">Edit stream info</h1>
                                         
                                         <form className="max-w-sm mx-auto mt-3">
                                             <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
@@ -126,7 +126,7 @@ export const InfoModal = ({
                                                 onChange={(e) => setStreamName(e.target.value)}
                                                 value={streamName}
                                                 placeholder="Stream name"
-                                                className={cn("block w-full  p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                className={cn("block w-full  p-2 text-gray-900 border focus:outline-none  border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-red-600 focus:border-red-600 dark:bg-slate-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-600 dark:focus:border-red-600"
                                                 )}
                                             />
                                         </form>
@@ -135,7 +135,7 @@ export const InfoModal = ({
                                 <div className="px-3 pt-4">
                                     <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Thumbnail</label>
                                     {!thumbnailUrl ? (<div className="flex items-center justify-center w-full ">
-                                        <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                        <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-slate-900 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                                 <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
@@ -165,7 +165,7 @@ export const InfoModal = ({
                                 </div>
 
 
-                                <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                <div className="bg-gray-50 dark:bg-slate-900 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                 {!isLoading ? <button type="button" onClick={ChangeData} className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
                                     Save
                                 </button> :

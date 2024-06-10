@@ -33,7 +33,7 @@ export const Container = ({
     return(
         <div className={cn(
         "flex-1 lg:ml-[256px] ml-[60px]",
-        (disappeared ? " lg:ml-[0px]" :  collapsed ? " lg:ml-[60px]" : " "))
+        (disappeared ? " lg:ml-[0px] ml-[0px]" :  collapsed ? " lg:ml-[60px]" : " "))
         }>
             {children}
         </div>

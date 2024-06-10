@@ -10,8 +10,7 @@ interface ChatInputProps {
     onSubmit: () => void;
     value: string;
     onChange: (string) => void;
-    isChatFollowersOnly: boolean;
-    chatDelay: number;
+    stream: any;
     isFollowing: boolean;
     isHost: boolean;
 };
@@ -20,13 +19,15 @@ export const ChatInput = ({
     onSubmit,
     value,
     onChange,
-    isChatFollowersOnly,
-    chatDelay,
+    stream,
     isFollowing,
     isHost
 }: ChatInputProps) => {
     const [isDelayBlocked, setIsDelayBlocked] = useState(false);
-    const isDisabled = isDelayBlocked || (isChatFollowersOnly && !isFollowing);
+    const isDisabled = isDelayBlocked || (stream.followerChat && !isFollowing);
+    console.log("stream.followerChat = " + stream.followerChat);
+    console.log("stream.cahtdelay = " + stream.chatDelay);
+    console.log("isFollowing = " + isFollowing);
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -34,12 +35,12 @@ export const ChatInput = ({
 
         if(!value || isDisabled) return;
 
-        if(!isDelayBlocked && chatDelay > 0){
+        if(!isDelayBlocked && stream.chatDelay > 0){
+            onSubmit();
             setIsDelayBlocked(true);
             setTimeout(() =>{
                 setIsDelayBlocked(false);
-                onSubmit();
-            }, chatDelay*1000);
+            }, stream.chatDelay*1000);
         }
         else onSubmit();
     }
@@ -51,8 +52,8 @@ export const ChatInput = ({
         >
             <div className="w-full">
                 <ChatInfo
-                    chatDelayed={chatDelay}
-                    isChatFollowersOnly={isChatFollowersOnly}
+                    chatDelayed={stream.chatDelay}
+                    isChatFollowersOnly={stream.followerChat}
                     isDelayBlocked={isDelayBlocked}
                     isFollowing={isFollowing}
                 />
@@ -71,9 +72,9 @@ export const ChatInput = ({
                         value={value}
                         disabled={isDisabled}
                         placeholder="Send a message"
-                        className={cn("block w-full  p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                        className={cn("block w-full  p-2 text-neutral-100 border border-gray-700 py-2.5 rounded-md bg-slate-950 text-sm focus:ring-2 focus:ring-red-600 focus:outline-none focus:border-red-600 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
                             isHost && "pl-10",
-                            isChatFollowersOnly || isDelayBlocked && "rounded-t-none"
+                            stream.followerChat || isDelayBlocked && "rounded-t-none"
                         )}
                     />
                 </div>
@@ -81,8 +82,8 @@ export const ChatInput = ({
             <div className="ml-auto">
                 <button
                     type="submit"
-                    disabled={false}
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5  my-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                    disabled={isDisabled}
+                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 disabled:bg-red-800 disabled:text-gray-300  my-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                 >
                     Chat
                 </button>

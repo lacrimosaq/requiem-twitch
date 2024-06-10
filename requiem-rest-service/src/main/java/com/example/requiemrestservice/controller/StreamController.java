@@ -52,7 +52,7 @@ public class StreamController {
             if (nameNotEqual)         myStream.setName(model.getName());
             if (followerChatNotEqual) myStream.setFollowerChat(model.getFollowerChat());
             if (chatDelayNotEqual)    myStream.setChatDelay(model.getChatDelay());
-            if (thumbnailNotEqual)    myStream.setThumbnail(Base64Helper.base64ToFile("thumbnail",model.getThumbnail()));
+            if (thumbnailNotEqual)    myStream.setThumbnail(Base64Helper.base64ToFile("thumbnails",model.getThumbnail()));
 
             try {
                 streamService.updateById(myStream.getId(), myStream);
@@ -82,6 +82,7 @@ public class StreamController {
                     .toList();
             for(Stream stream : filteredStreams){
                 stream.setThumbnail(Base64Helper.fileToBase64(stream.getThumbnail()));
+                stream.getUser().setAvatar(Base64Helper.fileToBase64(stream.getUser().getAvatar()));
             }
             return ResponseEntity.ok(filteredStreams);
         }
@@ -93,7 +94,28 @@ public class StreamController {
                     .sorted(Comparator.comparingInt(Stream::getViewersCount).reversed())
                     .limit(10)
                     .toList();
+            for(Stream stream : filteredStreams){
+                stream.setThumbnail(Base64Helper.fileToBase64(stream.getThumbnail()));
+                stream.getUser().setAvatar(Base64Helper.fileToBase64(stream.getUser().getAvatar()));
+            }
             return ResponseEntity.ok(filteredStreams);
         }
+    }
+
+
+    @GetMapping(path="/search")
+    public @ResponseBody ResponseEntity<?> getSearchStreams(@RequestParam String term){
+        List<Stream> allStreams = (List<Stream>) streamService.getAll();
+        List<Stream> filteredStreams = allStreams.stream()
+                .filter(stream -> stream.getName().toLowerCase().contains(term.toLowerCase()))
+                .limit(10)  // Limits the result to the first 10 elements
+                .toList();
+
+        filteredStreams.forEach(stream -> {
+            stream.getUser().setAvatar(Base64Helper.fileToBase64(stream.getUser().getAvatar()));
+            stream.setThumbnail(Base64Helper.fileToBase64(stream.getThumbnail()));
+        });
+        return ResponseEntity.ok(filteredStreams);
+
     }
 }
