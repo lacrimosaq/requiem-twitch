@@ -11,7 +11,7 @@ export const StreamsFeed = () => {
       }, []);
     
     
-        const LoadRecommended = () => {
+    const LoadRecommended = () => {
         // let headers = new Headers();
         // headers.append('Content-Type', 'application/json');
         fetch("http://localhost:8080/stream/recommended/" + (localStorage.getItem("id") === null ? 0 : localStorage.getItem("id")), {
