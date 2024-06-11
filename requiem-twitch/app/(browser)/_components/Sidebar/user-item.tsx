@@ -8,12 +8,14 @@ interface UserItemProps{
     username: string;
     avatar: string;
     isLive?: boolean;
+    viewersCount: number;
 };
 
 export const UserItem = ({
     username,
     avatar,
-    isLive
+    isLive,
+    viewersCount,
 }: UserItemProps) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -26,14 +28,14 @@ export const UserItem = ({
             {!collapsed && (
                 <div className=" text-start">
                 <p className="font-semibold text-white ms-3 text-sm">{username}</p>
-                {(isLive ?<p className="text-white ms-3 text-sm">Dota 2</p> : null)}
-                </div>
+                {(isLive && false ?<p className="text-white ms-3 text-sm">Dota 2</p> : null)}
+                </div> 
             )}
             {!collapsed &&( 
                 isLive 
                 ?(<div className="flex ml-auto mr-1 mb-auto mt-2">
                     <div className="rounded-full bg-red-500 w-[8px] h-[8px] my-auto mx-1"></div>
-                    <p className="font-semibold text-white text-sm ">110</p>
+                    <p className="font-semibold text-white text-sm ">{viewersCount}</p>
                 </div>)
                 :(<div className="flex ml-auto mr-1">
                     <p className="text-white text-sm ">Offline</p>

@@ -29,6 +29,7 @@ export const Following = ({data}) => {
                     username={user.username}
                     avatar={user.avatar}
                     isLive={user.live}
+                    viewersCount={user.viewersCount}
                 />
             ))}
         </ul>
