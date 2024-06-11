@@ -1,8 +1,15 @@
-# Project README
+# Requiem.tv Project README
 
 ## Project Overview
 
-Welcome to our multi-service project! This repository contains a Next.js client, a Spring Boot Java API, a Golang API, and a MySQL database. Below, you'll find instructions on how to set up and run the project.
+Welcome to Requiem.tv, a multi-service streaming platform for gamers, similar to Twitch or Kick.com. This repository contains the following components:
+
+- **Next.js Client**: The frontend of our platform.
+- **Spring Boot Java API**: Backend API for handling various operations.
+- **Golang API**: Additional backend API for specific services.
+- **MySQL Database**: The database to store user and streaming data.
+
+We use LiveKit for streaming and chat functionalities. Below, you'll find instructions on how to set up and run the project.
 
 ## Ports by Default
 
@@ -134,7 +141,3 @@ If you encounter any issues, feel free to reach out via email: vladlittel@gmail.
 - Follow best practices for security and code quality.
 
 We hope you find this guide helpful. Happy coding! 🚀
-
----
-
-Feel free to customize this README further as per your project's needs. If you have any additional questions or need further information, please let me know!
