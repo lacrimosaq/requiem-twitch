@@ -40,9 +40,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/user/test").permitAll()
-                        .requestMatchers("/auth").permitAll()
-                        .requestMatchers("/auth/register").permitAll()
-                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/*").permitAll()
+                        .requestMatchers("/user/recommended/*").permitAll()
+                        .requestMatchers("/user/profile/*").permitAll()
+                        .requestMatchers("/stream/user/*").permitAll()
+                        .requestMatchers("/stream/recommended/*").permitAll()
+                        .requestMatchers("/user/search").permitAll()
+                        .requestMatchers("/stream/search").permitAll()
                         .anyRequest().authenticated()
 
                 )

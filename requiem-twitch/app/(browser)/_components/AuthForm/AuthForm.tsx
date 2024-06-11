@@ -1,7 +1,7 @@
 
 import { useState, useRef, Component } from 'react';
-import RegisterForm from "@/app/(browser)/_components/RegisterForm/RegisterForm";
-import LoginForm from "@/app/(browser)/_components/LoginForm/LoginForm";
+import RegisterForm from "@/app/(browser)/_components/AuthForm/RegisterForm/RegisterForm";
+import LoginForm from "@/app/(browser)/_components/AuthForm/LoginForm/LoginForm";
 
 export default function AuthForm (props) {
     const[formToShow, setFormToShow]=useState<string>(props.form);

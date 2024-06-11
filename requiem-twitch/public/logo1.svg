@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+	<title>New Project</title>
+	<defs>
+		<image  width="128" height="128" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACAAQMAAAD58POIAAAAAXNSR0IB2cksfwAAAAZQTFRFAAAAAAAApWe5zwAAAAJ0Uk5TAP9bkSK1AAABQ0lEQVR4nO2WSw7CMAxEM4AEO7gB3ARuBtwMbgI3gB1I/GwnJY6mUlBVWBGhqHoLeyY0niLYGl/CcWFPsH14k22/ymB6ku08y2C9ke05eAM8DG83DZCSuqysgfnBwHXSACuRiiCXiEWQS8QiaFSEpETBcpfAfRRBqhmrKniGZsF+5iwu8QfXxNrANbE2eAtP4uG6Wl+4rtYXvqs2RbYW7cHLUCHwMlrAcQGvS5XB61JlLcAJVanwQlVqC/DKRTuDwoqYYVB4EzMMCm/ijkFhVuwyKMyK3Q9AcRxyIF1AcWByZL2A8ozllP/gB+Arf2Uf71iHV7t+X+p3rn5v63e/Pj8+mEE0tuqTjoYjjU+auARoSNMY50FPUUBhQXFCgeP6SvK1hRbHGgUfRSOFJ8UrBTBHNIU4xTx9CPCngtlBcCB/brwAa5HdR5AKcpkAAAAASUVORK5CYII="/>
+		<image  width="88" height="85" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABVAQMAAAD3xbGpAAAAAXNSR0IB2cksfwAAAAZQTFRFAAAA5xkZ9qF+MgAAAAJ0Uk5TAP9bkSK1AAAAtklEQVR4nK3SQQ6CMBAF0CmYyE5uoDfxaMLN5Cb0BnZnE+vYUsx8kxlxIau3IPDz57vLQMszDuS4kmIn5kacXxL7kzh2urkRkwOP4MmwBwfD0XD6wQymbw497e9i9xQTg0uV/zbr/2ofG5k3zIatrqye0XgXbxjvixtwutNO31XodVs7xO9U5w4ZnCuvW62uGbLPV93Hec2ffbh9elJc9uPBAe6ouWwswt3RCXaC5reXoIpLaPQLCnvNwq85Ib4AAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Shape 1" href="#img1" x="0" y="0"/>
+	<use id="kisspng-gildan-team-rocket-r-adult-t-shirt-tee-logo-portab-team-rocket-vector-logo-by-rocketinc-fur-" href="#img2" x="21" y="22"/>
+</svg>
