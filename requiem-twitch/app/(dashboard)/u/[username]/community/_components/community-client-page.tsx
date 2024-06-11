@@ -15,7 +15,7 @@ export const CommunityClientPage = () => {
 
     const LoadFollowing = () => {
         setIsLoading(true);
-        fetch(ApiUrls.JAVA_APP_API_URL + "/follow/following/" + (localStorage.getItem("id") === null ? 0 : localStorage.getItem("id")), {
+        fetch(ApiUrls.JAVA_APP_API_URL + "/follow/follower/" + (localStorage.getItem("id") === null ? 0 : localStorage.getItem("id")), {
             method: "GET",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken")},
             // headers: headers,
