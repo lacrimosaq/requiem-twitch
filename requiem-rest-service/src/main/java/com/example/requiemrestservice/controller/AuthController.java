@@ -26,7 +26,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "${react.app.url}")
 public class AuthController {
     @Autowired
     private MyUserService myUserService;
@@ -87,6 +87,7 @@ public class AuthController {
                 stream.setUser(user);
                 streamService.save(stream);
 
+                user.setAvatar(Base64Helper.fileToBase64(user.getAvatar()));
                 String jwtToken = createJwtToken(user);
                 var response = new HashMap<String, Object>();
                 response.put("token", jwtToken);

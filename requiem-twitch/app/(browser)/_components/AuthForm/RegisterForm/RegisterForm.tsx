@@ -2,6 +2,7 @@
 import { useState, useRef, Component } from 'react';
 import { useRouter } from 'next/router'
 import { CircleX } from 'lucide-react';
+import { ApiUrls } from '@/app/path';
 
 const RegisterForm = ({stateChanger, ...rest}) => {
   const [username, setUsername] = useState("");
@@ -25,7 +26,7 @@ const RegisterForm = ({stateChanger, ...rest}) => {
         console.log(registerobj);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        fetch("http://localhost:8080/auth/register", {
+        fetch(ApiUrls.JAVA_APP_API_URL + "/auth/register", {
             method: "POST",
             headers: headers,
             body: JSON.stringify(registerobj)

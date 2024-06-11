@@ -1,6 +1,7 @@
 "use client"
 import { useState, useRef, useEffect } from 'react';
 import { StreamCard } from './stream-card';
+import { ApiUrls } from '@/app/path';
 
 export const StreamsFeed = () => {
     const [recommended, setRecommended] = useState<any>([]);
@@ -14,7 +15,7 @@ export const StreamsFeed = () => {
     const LoadRecommended = () => {
         // let headers = new Headers();
         // headers.append('Content-Type', 'application/json');
-        fetch("http://localhost:8080/stream/recommended/" + (localStorage.getItem("id") === null ? 0 : localStorage.getItem("id")), {
+        fetch(ApiUrls.JAVA_APP_API_URL + "/stream/recommended/" + (localStorage.getItem("id") === null ? 0 : localStorage.getItem("id")), {
             method: "GET",
             // headers: headers,
         }).then(resp => {

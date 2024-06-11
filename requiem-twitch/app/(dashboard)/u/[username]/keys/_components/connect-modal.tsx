@@ -5,6 +5,7 @@ import { Dispatch, useEffect, useState } from "react";
 import { initFlowbite } from "flowbite";
 import { IngressInput } from "livekit-server-sdk";
 import { toast } from "sonner";
+import { ApiUrls } from "@/app/path";
 
 interface ConnectModalProps {
     stream: any;
@@ -34,7 +35,7 @@ export const ConnectModal = ({
     const GenerateIngress = () => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        fetch("http://localhost:9000/create-ingress/" + localStorage.getItem("id") + "?ingressType=" + ingressType, {
+        fetch(ApiUrls.GO_APP_API_URL + "/create-ingress/" + localStorage.getItem("id") + "?ingressType=" + ingressType, {
               method: "POST",
               headers: headers,
           }).then(resp => {

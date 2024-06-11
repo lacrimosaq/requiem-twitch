@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/stream")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "${react.app.url}")
 public class StreamController {
     @Autowired
     private MyUserService myUserService;

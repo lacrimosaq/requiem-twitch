@@ -22,7 +22,8 @@ func main() {
 	r.HandleFunc("/test", myhandlers.TestHandler).Methods("GET")
 
 	corsMiddleware := handlers.CORS(
-		handlers.AllowedOrigins([]string{"http://localhost:3000"}),
+		// handlers.AllowedOrigins([]string{"http://localhost:3000"}),
+		handlers.AllowedOrigins([]string{"*"}),
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)

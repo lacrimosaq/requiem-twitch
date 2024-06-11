@@ -5,6 +5,7 @@ import { FollowButton } from "./follow-button";
 import { Stream } from "stream";
 import { StreamPlayer } from "@/components/stream-player/stream-player";
 import { NotFound } from "./not-found";
+import { ApiUrls } from "@/app/path";
 
 interface UserClientPageProps{
     params: {
@@ -43,7 +44,7 @@ export const UserClientPage = ({
     }, []);
     
     const LoadProfile = () => {
-        return fetch("http://localhost:8080/user/profile/" + params.username, {
+        return fetch(ApiUrls.JAVA_APP_API_URL + "/user/profile/" + params.username, {
             method: "GET",
             // headers: headers,
         })
@@ -64,7 +65,7 @@ export const UserClientPage = ({
         });
     };
     const LoadIsFollow = async (id) => {
-        await fetch("http://localhost:8080/follow/isFollowing/" + id + `?idfrom=${localStorage.getItem("id")}`, {
+        await fetch(ApiUrls.JAVA_APP_API_URL + "/follow/isFollowing/" + id + `?idfrom=${localStorage.getItem("id")}`, {
             method: "GET",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken")},
         }).then(resp => {
@@ -91,7 +92,7 @@ export const UserClientPage = ({
     };
     const LoadStream = async (id) => {
         let status = 0;
-        await fetch("http://localhost:8080/stream/user/" + id, {
+        await fetch(ApiUrls.JAVA_APP_API_URL + "/stream/user/" + id, {
             method: "GET",
             // headers: headers,
         }).then(resp => {

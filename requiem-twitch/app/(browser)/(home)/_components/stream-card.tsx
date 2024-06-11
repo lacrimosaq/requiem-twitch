@@ -16,7 +16,7 @@ export const StreamCard = ({
             <Thumbnail
                 src={data.thumbnail}
                 fallback={data.user.avatar}
-                isLive={data.isLive}
+                isLive={data.live}
                 viewersCount={data.viewersCount}
             />
             <div className="flex items-start">

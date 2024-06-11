@@ -17,7 +17,7 @@ export default function Home() {
         <title>Home Page - My Next.js App</title>
         <meta name="description" content="This is the home page of my Next.js app" />
       </Head> */}
-        <div className='h-full p-8 max-w-screen '>
+        <div className='h-full p-8 max-w-screen overflow-y-auto '>
             <StreamsFeed/>
         </div>
       </>

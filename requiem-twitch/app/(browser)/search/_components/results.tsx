@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { ResultUserCard } from "./result-user-card";
 import { ResultStreamCard } from "./result-stream-card";
+import { ApiUrls } from "@/app/path";
 
 interface ResultsProps{
     term?: string;
@@ -27,7 +28,7 @@ export const Results = ({
     },[term])
 
     const LoadUsersByTerm = () => {
-        fetch("http://localhost:8080/user/search?term=" + term, {
+        fetch(ApiUrls.JAVA_APP_API_URL + "/user/search?term=" + term, {
             method: "GET",
             // headers: headers,
         }).then(resp => {
@@ -42,7 +43,7 @@ export const Results = ({
         });
     }
     const LoadStreamsByTerm = () => {
-        fetch("http://localhost:8080/stream/search?term=" + term, {
+        fetch(ApiUrls.JAVA_APP_API_URL + "/stream/search?term=" + term, {
             method: "GET",
             // headers: headers,
         }).then(resp => {

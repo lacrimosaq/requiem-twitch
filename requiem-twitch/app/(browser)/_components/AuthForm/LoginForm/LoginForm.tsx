@@ -1,7 +1,9 @@
-
+"use client";
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation'
 import { CircleX } from 'lucide-react';
+import { config } from 'process';
+import { ApiUrls } from '@/app/path';
 const LoginForm = ({stateChanger, ...rest}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -11,12 +13,7 @@ const LoginForm = ({stateChanger, ...rest}) => {
     const router = useRouter();
     const isEmptyLabels = username.length === 0 || password.length === 0;
 
-    // const onSubmit = (e) => {
-    //   startTransition(() =>{
-    //     LoginApi(e);
-    //   });
-    // }
-    //     router.push('/dashboard')
+    console.log(ApiUrls.JAVA_APP_API_URL);
     const LoginApi =  (e) => {
           e.preventDefault();
           startLoading(true);
@@ -28,7 +25,7 @@ const LoginForm = ({stateChanger, ...rest}) => {
           console.log(loginobj);
           let headers = new Headers();
           headers.append('Content-Type', 'application/json');
-          fetch("http://localhost:8080/auth/login", {
+          fetch(ApiUrls.JAVA_APP_API_URL + "/auth/login", {
               method: "POST",
               headers: headers,
               body: JSON.stringify(loginobj)

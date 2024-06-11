@@ -1,3 +1,4 @@
+import { ApiUrls } from '@/app/path';
 import {create} from 'zustand';
 
 interface RecommendedStore{
@@ -10,7 +11,7 @@ export const useRecommended = create<RecommendedStore>((set) => ({
     // setFollowedUsers: () => set((value: any) => ({followedUsers: value})),
     UpdateRecommended: () =>{
         console.log("UpdateRecommended");
-        fetch("http://localhost:8080/user/recommended/" + (localStorage.getItem("id") ?? 0), {
+        fetch(ApiUrls.JAVA_APP_API_URL + "/user/recommended/" + (localStorage.getItem("id") ?? 0), {
             method: "GET",
             // headers: headers,
         }).then(resp => {

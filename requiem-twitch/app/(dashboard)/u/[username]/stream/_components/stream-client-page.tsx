@@ -1,4 +1,5 @@
 "use client";
+import { ApiUrls } from "@/app/path";
 import { StreamPlayer } from "@/components/stream-player/stream-player";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -22,7 +23,7 @@ export const StreamClientPage = ({
     
     const LoadHost = async () => {
         let status = 0;
-        await fetch("http://localhost:8080/user/profile/" + params.username, {
+        await fetch(ApiUrls.JAVA_APP_API_URL + "/user/profile/" + params.username, {
             method: "GET",
             // headers: headers,
         }).then(resp => {
@@ -66,7 +67,7 @@ export const StreamClientPage = ({
     // }
     const LoadStream = async () => {
         let status = 0;
-        await fetch("http://localhost:8080/stream/user/" + localStorage.getItem("id"), {
+        await fetch(ApiUrls.JAVA_APP_API_URL + "/stream/user/" + localStorage.getItem("id"), {
             method: "GET",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken")},
             // headers: headers,

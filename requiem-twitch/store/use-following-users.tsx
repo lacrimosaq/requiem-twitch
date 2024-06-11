@@ -1,3 +1,4 @@
+import { ApiUrls } from '@/app/path';
 import {create} from 'zustand';
 
 interface FollowingStore{
@@ -10,7 +11,7 @@ export const useFollowing = create<FollowingStore>((set) => ({
     // setFollowedUsers: () => set((value: any) => ({followedUsers: value})),
     UpdateFollowing: () =>{
         console.log("UpdateFollowing");
-        fetch("http://localhost:8080/follow/following/" + (localStorage.getItem("id") ?? 0), {
+        fetch(ApiUrls.JAVA_APP_API_URL + "/follow/following/" + (localStorage.getItem("id") ?? 0), {
             method: "GET",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken"), 'Content-Type': 'application/json'},
         }).then(resp => {

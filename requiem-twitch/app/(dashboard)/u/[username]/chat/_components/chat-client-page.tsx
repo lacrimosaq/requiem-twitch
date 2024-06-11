@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ToggleCard } from "./toggle-card";
+import { ApiUrls } from "@/app/path";
 
 export const ChatClientPage = () => {
     // const [stream, setStream] = useState({followerChat: false});
@@ -27,7 +28,7 @@ export const ChatClientPage = () => {
     
     const LoadStream = async () => {
         let status = 0;
-        await fetch("http://localhost:8080/stream/user/" + localStorage.getItem("id"), {
+        await fetch(ApiUrls.JAVA_APP_API_URL + "/stream/user/" + localStorage.getItem("id"), {
             method: "GET",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken")},
             // headers: headers,

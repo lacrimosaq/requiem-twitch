@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/follow")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "${react.app.url}")
 public class FollowController {
     @Autowired
     private MyUserService myUserService;

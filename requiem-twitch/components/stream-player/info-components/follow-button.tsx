@@ -1,6 +1,7 @@
 "use client";
 
 import LoginForm from "@/app/(browser)/_components/AuthForm/LoginForm/LoginForm";
+import { ApiUrls } from "@/app/path";
 import { cn } from "@/lib/utils";
 import { useFollowing } from "@/store/use-following-users";
 import { useForm } from "@/store/use-form";
@@ -32,7 +33,7 @@ export const FollowButton = ({
 
     const FollowApi = async () => {
         setIsLoading(true);
-        await fetch("http://localhost:8080/follow/follow/" + hostIdentity + "?idfrom=" + localStorage.getItem("id"), {
+        await fetch(ApiUrls.JAVA_APP_API_URL + "/follow/follow/" + hostIdentity + "?idfrom=" + localStorage.getItem("id"), {
             method: "POST",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken"), 'Content-Type': 'application/json'},
         }).then(resp => {

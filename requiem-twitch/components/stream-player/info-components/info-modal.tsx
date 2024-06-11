@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { ApiUrls } from "@/app/path";
 
 interface InfoModalProps{
     stream: any;
@@ -60,7 +61,7 @@ export const InfoModal = ({
             ["thumbnail"] : thumbnailUrl,
             ["name"] : streamName,
         };
-        fetch("http://localhost:8080/stream/edit/" + localStorage.getItem("id"), {
+        fetch(ApiUrls.JAVA_APP_API_URL + "/stream/edit/" + localStorage.getItem("id"), {
             method: "PUT",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken"), 'Content-Type': 'application/json'},
             body: JSON.stringify(streamobj)

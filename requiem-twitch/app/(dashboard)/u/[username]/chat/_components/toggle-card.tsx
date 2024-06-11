@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { initFlowbite } from "flowbite";
 import { cn } from "@/utils/cn";
 import { PencilLine } from "lucide-react";
+import { ApiUrls } from "@/app/path";
 
 type FieldType = "chatDelay"|"followerChat";
 
@@ -46,7 +47,7 @@ export const ToggleCard = ({
         let streamobj = {
             [field] : value,
         };
-        fetch("http://localhost:8080/stream/edit/" + localStorage.getItem("id"), {
+        fetch(ApiUrls.JAVA_APP_API_URL + "/stream/edit/" + localStorage.getItem("id"), {
             method: "PUT",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken"), 'Content-Type': 'application/json'},
             body: JSON.stringify(streamobj)

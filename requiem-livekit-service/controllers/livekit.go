@@ -142,6 +142,7 @@ func CreateIngresses(hostIdentity int, ingressType string) (*livekit.IngressInfo
 	ingressInfo, err := client.CreateIngress(ctx, options)
 	fmt.Println("CreateIngress")
 	if err != nil {
+		fmt.Printf("error creating ingress: %v", err)
 		return nil, fmt.Errorf("error creating ingress: %v", err)
 	}
 	fmt.Printf("Ingress created: %v\n", ingressInfo)

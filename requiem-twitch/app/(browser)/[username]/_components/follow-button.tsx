@@ -1,4 +1,5 @@
 "use client"
+import { ApiUrls } from "@/app/path";
 import { useForm } from "@/store/use-form";
 import { revalidatePath } from "next/cache";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -23,7 +24,7 @@ export const FollowButton = ({
 
     const FollowApi = async () => {
         setIsLoading(true);
-        await fetch("http://localhost:8080/follow/follow/" + userid + "?idfrom=" + localStorage.getItem("id"), {
+        await fetch(ApiUrls.JAVA_APP_API_URL + "8080/follow/follow/" + userid + "?idfrom=" + localStorage.getItem("id"), {
             method: "POST",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken"), 'Content-Type': 'application/json'},
         }).then(resp => {

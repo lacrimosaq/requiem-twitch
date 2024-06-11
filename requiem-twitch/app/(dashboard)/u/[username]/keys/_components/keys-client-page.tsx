@@ -5,6 +5,7 @@ import { UrlCard } from "./url-card";
 import { cn } from "@/utils/cn";
 import { KeyCard } from "./key-card";
 import { ConnectModal } from "./connect-modal";
+import { ApiUrls } from "@/app/path";
 
 export const KeysClientPage = () => {
     const [streamData, setStreamData] = useState<any>({serverUrl: undefined, streamKey: undefined});
@@ -16,7 +17,7 @@ export const KeysClientPage = () => {
     
     const LoadStream = async () => {
         let status = 0;
-        await fetch("http://localhost:8080/stream/user/" + localStorage.getItem("id"), {
+        await fetch(ApiUrls.JAVA_APP_API_URL + "/stream/user/" + localStorage.getItem("id"), {
             method: "GET",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken")},
             // headers: headers,

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FollowButton } from "@/components/stream-player/info-components/follow-button";
 import Image from "next/image";
 import Link from "next/link";
+import { ApiUrls } from "@/app/path";
 
 interface ResultUserCardProps{
     data: any,
@@ -20,7 +21,7 @@ export const ResultUserCard = ({
     },[])
     const LoadIsFollow = async (id) => {
         setIsFollow(true);
-        await fetch("http://localhost:8080/follow/isFollowing/" + id + `?idfrom=${localStorage.getItem("id")}`, {
+        await fetch(ApiUrls.JAVA_APP_API_URL + "/follow/isFollowing/" + id + `?idfrom=${localStorage.getItem("id")}`, {
             method: "GET",
             headers: {"Authorization":"Bearer " + localStorage.getItem("jwtToken")},
         }).then(resp => {
